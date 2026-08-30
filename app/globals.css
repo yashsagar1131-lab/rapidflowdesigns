@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --grid-line: rgba(236, 236, 232, 0.045);
+}
+
+* {
+  scroll-behavior: smooth;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-color: #09090b;
+  color: #ecece8;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+::selection {
+  background: #c1875a;
+  color: #09090b;
+}
+
+/* Reveal-on-scroll: JS toggles .is-visible; CSS-only fallback keeps content visible if JS is disabled */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+}
+.reveal.is-visible {
+  animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+noscript ~ .reveal,
+.no-js .reveal {
+  opacity: 1;
+  transform: none;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Focus visibility */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid #c1875a;
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.grid-field {
+  background-image: var(--tw-gradient-stops), var(--tw-gradient-stops);
+  background-image: linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
