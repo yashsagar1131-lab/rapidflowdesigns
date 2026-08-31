@@ -33,18 +33,19 @@ body {
   color: #09090b;
 }
 
-/* Reveal-on-scroll: JS toggles .is-visible; CSS-only fallback keeps content visible if JS is disabled */
-.reveal {
+/*
+  Reveal-on-scroll, fail-safe by design: content has no hidden state at
+  all unless the JS component explicitly opts an element into it (and even
+  then, the component forces visibility after 1.5s no matter what). If JS
+  never runs — disabled, blocked, or errors elsewhere on the page — content
+  simply has no animation classes applied and renders normally.
+*/
+.reveal-pending {
   opacity: 0;
   transform: translateY(16px);
 }
-.reveal.is-visible {
+.reveal-in {
   animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-noscript ~ .reveal,
-.no-js .reveal {
-  opacity: 1;
-  transform: none;
 }
 
 .text-balance {
