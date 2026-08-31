@@ -40,16 +40,25 @@ Any Next.js-compatible host works. The simplest path:
    `@netlify/plugin-nextjs` (Netlify prompts you to add it automatically for
    Next.js repos).
 
-No API keys or environment variables are needed for this first version —
-the site is fully static/client-rendered aside from Next's own build step.
+## Environment variables
+
+One is required for the contact form to work:
+
+| Variable | Value |
+|---|---|
+| `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY` | Your [Web3Forms](https://web3forms.com) access key |
+
+This is a `NEXT_PUBLIC_` variable, meaning it's baked into the client bundle
+at build time — set it *before* running `npm run build` / before Railway (or
+whatever host you use) builds the app, or the form won't have a key to
+submit with. It's safe to expose client-side; that's how Web3Forms access
+keys are designed to be used (embedded in a public HTML form).
 
 ## What still needs your input
 
-- **Contact form delivery.** The form currently builds a `mailto:` link to
-  `yash@rapidflowdesigns.com` and hands off to the visitor's email client —
-  there's no backend yet, so nothing is stored or guaranteed to send. For a
-  more reliable inbox, wire `components/ContactForm.tsx` to a form backend
-  (Formspree, Resend, Getform) or a Next.js API route once you've chosen one.
+- **Contact form spam.** Submissions go through Web3Forms with a basic
+  honeypot field. If spam becomes a problem, Web3Forms supports hCaptcha
+  on the free plan — see their docs for adding it to the form.
 - **Open Graph image.** `app/layout.tsx` has Open Graph/Twitter metadata but
   no image asset yet. Drop a 1200×630 image at `public/og-image.png` and add
   `images: ["/og-image.png"]` to the `openGraph` object in `app/layout.tsx`
