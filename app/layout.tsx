@@ -27,35 +27,34 @@ const siteUrl = "https://rapidflowdesigns.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "RapidFlow Designs | Hardware Product Development & Engineering",
+  title: "RapidFlow Designs | Hardware Schematic & PCB Design",
   description:
-    "RapidFlow Designs provides hardware product development and engineering support, from electronics architecture and PCB design through prototyping, validation and production.",
+    "RapidFlow Designs provides hardware schematic and PCB design services — from electronics architecture through manufacturable layout, delivered as complete design files ready for procurement and prototyping.",
   keywords: [
-    "hardware product development",
+    "hardware schematic design",
     "electronics engineering",
     "PCB design",
-    "PCB development",
+    "PCB layout",
     "hardware engineering",
-    "embedded systems",
-    "prototype development",
+    "circuit design",
     "electronics design",
-    "product development",
-    "DFM",
-    "hardware prototyping",
+    "BOM",
+    "PCB design services",
+    "schematic design services",
   ],
   openGraph: {
-    title: "RapidFlow Designs | Hardware Product Development & Engineering",
+    title: "RapidFlow Designs | Hardware Schematic & PCB Design",
     description:
-      "Hardware product development and engineering support, from concept and electronics design through prototyping, validation and production.",
+      "Hardware schematic and PCB design, from electronics architecture through manufacturable layout — delivered as complete design files ready for procurement and prototyping.",
     url: siteUrl,
     siteName: "RapidFlow Designs",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "RapidFlow Designs | Hardware Product Development & Engineering",
+    title: "RapidFlow Designs | Hardware Schematic & PCB Design",
     description:
-      "Hardware product development and engineering support, from concept and electronics design through prototyping, validation and production.",
+      "Hardware schematic and PCB design, from electronics architecture through manufacturable layout — delivered as complete design files ready for procurement and prototyping.",
   },
   icons: {
     icon: "/favicon.svg",

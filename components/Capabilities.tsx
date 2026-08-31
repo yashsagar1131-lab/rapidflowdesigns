@@ -19,18 +19,8 @@ const CAPABILITIES = [
   },
   {
     index: "04",
-    title: "Embedded Systems",
-    desc: "Hardware-software integration and embedded product development support.",
-  },
-  {
-    index: "05",
-    title: "Prototype & Bring-Up",
-    desc: "Prototype build support, board bring-up, debugging and iteration.",
-  },
-  {
-    index: "06",
-    title: "Validation & Production",
-    desc: "Testing, design verification, DFM, BOM optimization and manufacturing support.",
+    title: "Design Handoff",
+    desc: "Complete schematics, PCB files and BOM, delivered ready for procurement and prototyping.",
   },
 ];
 
@@ -41,12 +31,12 @@ export default function Capabilities() {
         <Reveal>
           <SectionHeading
             eyebrow="What We Do"
-            title="Hardware engineering, end to end."
-            lead="We help companies turn hardware concepts into working, manufacturable products."
+            title="Schematic and PCB design, done properly."
+            lead="We design the electronics — from architecture through manufacturable PCB layout — and hand off complete files ready for procurement and prototyping. Testing, validation and production are yours to run, on clean, well-documented design outputs."
           />
         </Reveal>
 
-        <div className="mt-14 grid grid-cols-1 gap-px border border-ink-line bg-ink-line sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-14 grid grid-cols-1 gap-px border border-ink-line bg-ink-line sm:grid-cols-2">
           {CAPABILITIES.map((cap, i) => (
             <Reveal key={cap.index} delay={i * 60}>
               <div className="group h-full bg-ink p-7 transition-colors hover:bg-ink-raised md:p-8">

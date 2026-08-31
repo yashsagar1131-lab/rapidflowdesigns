@@ -14,13 +14,14 @@ export default function Hero() {
           </div>
 
           <h1 className="text-balance font-display text-[42px] font-semibold leading-[1.08] tracking-tight text-paper sm:text-[52px] lg:text-[58px]">
-            Build hardware that actually ships.
+            Schematic to PCB. Ready to build.
           </h1>
 
           <p className="mt-6 max-w-[520px] text-balance text-[17px] leading-relaxed text-paper-dim">
-            Hardware product development and engineering support from concept
-            and electronics design through prototyping, validation and
-            production.
+            Hardware schematic and PCB design for product teams. We take your
+            concept through electronics architecture and manufacturable
+            layout, and hand off complete design files — ready for
+            procurement and prototyping.
           </p>
 
           <div className="mt-9 flex flex-col gap-3.5 sm:flex-row sm:items-center">
@@ -41,9 +42,9 @@ export default function Hero() {
 
           <dl className="mt-16 grid max-w-[440px] grid-cols-3 gap-6 border-t border-ink-line pt-6">
             {[
-              ["Schematic → PCB", "Full electronics workflow"],
-              ["Bring-up", "Debug & validation"],
-              ["DFM", "Manufacturing-ready"],
+              ["Schematic → PCB", "Full circuit-to-layout workflow"],
+              ["BOM & Sourcing", "Procurement-ready component lists"],
+              ["Design Handoff", "Files ready to build"],
             ].map(([term, def]) => (
               <div key={term}>
                 <dt className="font-mono text-[11px] uppercase tracking-[0.06em] text-copper">{term}</dt>

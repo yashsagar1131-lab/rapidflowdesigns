@@ -19,13 +19,7 @@ export default function Contact() {
 
           <div className="mt-10 space-y-4 border-t border-ink-line pt-8">
             <div>
-              <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-paper-mute">General inquiries</p>
-              <a href="mailto:hello@rapidflowdesigns.com" className="mt-1 block text-[16px] text-paper transition-colors hover:text-copper">
-                hello@rapidflowdesigns.com
-              </a>
-            </div>
-            <div>
-              <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-paper-mute">Direct</p>
+              <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-paper-mute">Email</p>
               <a href="mailto:yash@rapidflowdesigns.com" className="mt-1 block text-[16px] text-paper transition-colors hover:text-copper">
                 yash@rapidflowdesigns.com
               </a>

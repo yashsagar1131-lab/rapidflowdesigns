@@ -41,7 +41,7 @@ export default function ContactForm() {
       budget ? `Budget / timeline: ${budget}` : "",
     ].filter(Boolean);
 
-    const mailto = `mailto:hello@rapidflowdesigns.com?subject=${encodeURIComponent(
+    const mailto = `mailto:yash@rapidflowdesigns.com?subject=${encodeURIComponent(
       subject
     )}&body=${encodeURIComponent(bodyLines.join("\n"))}`;
 

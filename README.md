@@ -46,7 +46,7 @@ the site is fully static/client-rendered aside from Next's own build step.
 ## What still needs your input
 
 - **Contact form delivery.** The form currently builds a `mailto:` link to
-  `hello@rapidflowdesigns.com` and hands off to the visitor's email client —
+  `yash@rapidflowdesigns.com` and hands off to the visitor's email client —
   there's no backend yet, so nothing is stored or guaranteed to send. For a
   more reliable inbox, wire `components/ContactForm.tsx` to a form backend
   (Formspree, Resend, Getform) or a Next.js API route once you've chosen one.
@@ -76,8 +76,9 @@ components/
                       tying "RapidFlow" and "concept → production" together
   SectionHeading.tsx  Shared eyebrow/title/lead pattern used by sections
   Capabilities.tsx    "What We Do" — 6 capability cards
-  Process.tsx         "From Concept to Production" — 5-step flow with an
-                      animated connecting line (desktop)
+  Process.tsx         "From Concept to Manufacturable PCB" — 3-step flow
+                      (Define / Design / Deliver) with an animated
+                      connecting line (desktop)
   WhyRapidFlow.tsx    4-point differentiation section
   Applications.tsx    Industry/application areas grid
   WhoWeWorkWith.tsx  Target-customer list

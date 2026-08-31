@@ -3,10 +3,8 @@ import SectionHeading from "./SectionHeading";
 
 const STEPS = [
   { index: "01", title: "Define", desc: "Requirements, constraints and system architecture." },
-  { index: "02", title: "Design", desc: "Electronics architecture, schematics, components and PCB." },
-  { index: "03", title: "Prototype", desc: "Prototype builds, board bring-up and debugging." },
-  { index: "04", title: "Validate", desc: "Testing, verification and design refinement." },
-  { index: "05", title: "Production", desc: "DFM, BOM optimization and manufacturing support." },
+  { index: "02", title: "Design", desc: "Electronics architecture, schematics, components and PCB layout." },
+  { index: "03", title: "Deliver", desc: "Schematics, PCB files and BOM handed off, ready for procurement and prototyping." },
 ];
 
 export default function Process() {
@@ -16,8 +14,8 @@ export default function Process() {
         <Reveal>
           <SectionHeading
             eyebrow="Development Flow"
-            title="From concept to production."
-            lead="Keep engineering decisions connected from the first schematic to the production-ready design."
+            title="From concept to manufacturable PCB."
+            lead="Keep engineering decisions connected from the first schematic to the production-ready design file."
           />
         </Reveal>
 
@@ -43,7 +41,7 @@ export default function Process() {
             />
           </svg>
 
-          <ol className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-5 lg:gap-6">
+          <ol className="grid grid-cols-1 gap-10 sm:grid-cols-3 lg:gap-10">
             {STEPS.map((step, i) => (
               <Reveal key={step.index} delay={i * 90}>
                 <li className="relative lg:pt-0">

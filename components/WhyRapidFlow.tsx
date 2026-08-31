@@ -3,19 +3,19 @@ import Reveal from "./Reveal";
 const POINTS = [
   {
     title: "Think beyond the schematic",
-    desc: "We consider how the design will actually be assembled, tested, debugged and manufactured.",
+    desc: "We consider how the design will actually be assembled and manufactured downstream, not just whether it works on paper.",
   },
   {
-    title: "Practical product-development mindset",
-    desc: "Engineering decisions are made with the complete product lifecycle in view.",
+    title: "Clean, well-documented handoff",
+    desc: "Design files are structured so your team — or your prototyping and manufacturing partners — can pick them up without back-and-forth.",
   },
   {
     title: "Flexible engineering support",
-    desc: "Work with us for a focused engineering task or broader product-development support.",
+    desc: "Work with us for a focused schematic or PCB task, or the full electronics design scope.",
   },
   {
     title: "Built for real-world constraints",
-    desc: "Cost, availability, manufacturability, reliability and time-to-market matter.",
+    desc: "Cost, component availability, manufacturability and time-to-market shape every design decision.",
   },
 ];
 
