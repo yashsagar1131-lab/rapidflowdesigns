@@ -6,7 +6,7 @@ export default function Hero() {
       <div className="grid-field pointer-events-none absolute inset-0" />
       <div className="pointer-events-none absolute -left-40 top-0 h-[560px] w-[560px] rounded-full bg-copper/[0.06] blur-[120px]" />
 
-      <div className="relative mx-auto grid max-w-content items-center gap-12 px-6 pb-14 pt-24 md:px-10 md:pb-28 md:pt-44 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8">
+      <div className="relative mx-auto grid max-w-content items-center gap-12 px-6 pb-14 pt-24 md:px-10 md:pb-16 md:pt-28 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8">
         <div>
           <div className="mb-6 inline-flex items-center gap-2 border border-ink-line px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.14em] text-paper-mute">
             <span className="h-1.5 w-1.5 rounded-full bg-copper" />
@@ -40,7 +40,7 @@ export default function Hero() {
             </a>
           </div>
 
-          <dl className="mt-10 grid max-w-[440px] grid-cols-1 gap-6 border-t border-ink-line pt-6 sm:grid-cols-3 lg:mt-16">
+          <dl className="mt-10 grid max-w-[440px] grid-cols-1 gap-6 border-t border-ink-line pt-6 sm:grid-cols-3 lg:mt-10">
             {[
               ["Schematic → PCB", "Full circuit-to-layout workflow"],
               ["BOM & Sourcing", "Procurement-ready component lists"],
