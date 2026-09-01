@@ -40,7 +40,7 @@ export default function Hero() {
             </a>
           </div>
 
-          <dl className="mt-16 grid max-w-[440px] grid-cols-3 gap-6 border-t border-ink-line pt-6">
+          <dl className="mt-16 grid max-w-[440px] grid-cols-1 gap-6 border-t border-ink-line pt-6 sm:grid-cols-3">
             {[
               ["Schematic → PCB", "Full circuit-to-layout workflow"],
               ["BOM & Sourcing", "Procurement-ready component lists"],

@@ -62,7 +62,7 @@ export default function CircuitFlow() {
       </g>
 
       {/* reference designators */}
-      <g fontFamily="var(--font-mono)" fontSize="10" fill="#63686E">
+      <g className="hero-svg-fine-detail" fontFamily="var(--font-mono)" fontSize="10" fill="#63686E">
         <text x="178" y="60">D1</text>
         <text x="126" y="88">R1</text>
         <text x="126" y="156">C1</text>
@@ -152,7 +152,7 @@ export default function CircuitFlow() {
         <rect key={i} x={326 + i * 20} y="548" width="8" height="15" fill="#C1875A" opacity={0.55 + (i % 2) * 0.25} />
       ))}
 
-      <text x="312" y="404" fontFamily="var(--font-mono)" fontSize="8" fill="#ECECE8" opacity="0.3" letterSpacing="1">
+      <text className="hero-svg-fine-detail" x="312" y="404" fontFamily="var(--font-mono)" fontSize="8" fill="#ECECE8" opacity="0.3" letterSpacing="1">
         RFD
       </text>
 

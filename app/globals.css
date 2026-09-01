@@ -69,3 +69,12 @@ select:focus-visible {
     linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
   background-size: 56px 56px;
 }
+
+/* Hero circuit diagram: fine reference-designator/silkscreen text renders
+   below legible size once the SVG is scaled down to phone width, so hide
+   it there rather than let it render as illegible clutter. */
+@media (max-width: 480px) {
+  .hero-svg-fine-detail {
+    display: none;
+  }
+}
