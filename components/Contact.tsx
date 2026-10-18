@@ -1,43 +1,30 @@
-import Reveal from "./Reveal";
 import ContactForm from "./ContactForm";
 
 export default function Contact() {
   return (
-    <section id="contact" className="relative overflow-hidden border-b border-ink-line bg-ink-raised py-24 md:py-32">
-      <div className="pointer-events-none absolute -right-40 top-10 h-[520px] w-[520px] rounded-full bg-copper/[0.07] blur-[130px]" />
-
-      <div className="relative mx-auto grid max-w-content gap-14 px-6 md:px-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
-        <Reveal>
-          <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-copper">Contact</p>
-          <h2 className="mt-3 text-balance font-display text-[30px] font-semibold leading-tight tracking-tight text-paper sm:text-[36px]">
-            Have a hardware product in development?
+    <section id="contact" className="bg-teal-deep py-20 text-white md:py-28">
+      <div className="mx-auto grid max-w-content gap-12 px-5 md:px-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+        <div>
+          <h2 className="text-balance font-display text-[34px] font-semibold leading-[1.05] tracking-[-0.03em] sm:text-[46px]">
+            Tell us what you’d like AI to take off your plate.
           </h2>
-          <p className="mt-5 max-w-[440px] text-[15.5px] leading-relaxed text-paper-dim">
-            Tell us what you&apos;re building, where you are in the
-            development process, and where you need engineering support.
+          <p className="mt-5 max-w-[30rem] text-pretty text-[17.5px] leading-relaxed text-white/75">
+            A few lines is enough. We’ll reply, usually within two working days, to set up a free 30-minute call.
           </p>
-
-          <div className="mt-10 space-y-4 border-t border-ink-line pt-8">
-            <div>
-              <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-paper-mute">Email</p>
-              <a href="mailto:yash@rapidflowdesigns.com" className="mt-1 block text-[16px] text-paper transition-colors hover:text-copper">
-                yash@rapidflowdesigns.com
-              </a>
-            </div>
-            <div>
-              <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-paper-mute">Web</p>
-              <a href="https://rapidflowdesigns.com" className="mt-1 block text-[16px] text-paper transition-colors hover:text-copper">
-                rapidflowdesigns.com
-              </a>
-            </div>
+          <div className="mt-10 border-t border-white/20 pt-6">
+            <p className="text-[14px] text-white/60">Prefer email?</p>
+            <a
+              href="mailto:yash@rapidflowdesigns.com"
+              className="mt-1 inline-block text-[18px] font-medium text-white underline decoration-white/30 underline-offset-4 transition-colors hover:decoration-white"
+            >
+              yash@rapidflowdesigns.com
+            </a>
           </div>
-        </Reveal>
+        </div>
 
-        <Reveal delay={100}>
-          <div className="border border-ink-line bg-ink p-7 md:p-10">
-            <ContactForm />
-          </div>
-        </Reveal>
+        <div className="rounded-2xl bg-surface p-6 text-ink md:p-9">
+          <ContactForm />
+        </div>
       </div>
     </section>
   );

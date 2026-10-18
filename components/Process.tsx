@@ -1,60 +1,51 @@
-import Reveal from "./Reveal";
-import SectionHeading from "./SectionHeading";
-
 const STEPS = [
-  { index: "01", title: "Define", desc: "Requirements, constraints and system architecture." },
-  { index: "02", title: "Design", desc: "Electronics architecture, schematics, components and PCB layout." },
-  { index: "03", title: "Deliver", desc: "Schematics, PCB files and BOM handed off, ready for procurement and prototyping." },
+  {
+    name: "Map",
+    time: "Typically 1–2 weeks",
+    body: "We look at how the work actually gets done today, pick one workflow where AI can save real time or money, and agree on the number we’ll measure it by.",
+  },
+  {
+    name: "Prove",
+    time: "Typically 2–4 weeks",
+    body: "A working prototype on your real data, tested against real cases, so you can judge the results before committing to more.",
+  },
+  {
+    name: "Build",
+    time: "Depends on scope",
+    body: "The production version, connected to your systems, with access controls, testing against known cases, and a person in the loop wherever it matters.",
+  },
+  {
+    name: "Run and hand over",
+    time: "Ongoing, if you want it",
+    body: "Monitoring, tuning and documentation. Your team is trained to use it, and the code, prompts and accounts are yours.",
+  },
 ];
 
 export default function Process() {
   return (
-    <section id="process" className="relative overflow-hidden border-b border-ink-line bg-ink-raised py-24 md:py-32">
-      <div className="mx-auto max-w-content px-6 md:px-10">
-        <Reveal>
-          <SectionHeading
-            eyebrow="Development Flow"
-            title="From concept to manufacturable PCB."
-            lead="Keep engineering decisions connected from the first schematic to the production-ready design file."
-          />
-        </Reveal>
-
-        <div className="relative mt-16">
-          {/* connecting line, desktop */}
-          <svg
-            className="pointer-events-none absolute left-0 top-[27px] hidden w-full lg:block"
-            height="2"
-            viewBox="0 0 1000 2"
-            preserveAspectRatio="none"
-            aria-hidden="true"
-          >
-            <line x1="0" y1="1" x2="1000" y2="1" stroke="#2A2E35" strokeWidth="1" />
-            <line
-              x1="0"
-              y1="1"
-              x2="1000"
-              y2="1"
-              stroke="#C1875A"
-              strokeWidth="1.4"
-              strokeDasharray="4 8"
-              className="animate-dash-flow"
-            />
-          </svg>
-
-          <ol className="grid grid-cols-1 gap-10 sm:grid-cols-3 lg:gap-10">
-            {STEPS.map((step, i) => (
-              <Reveal key={step.index} delay={i * 90}>
-                <li className="relative lg:pt-0">
-                  <div className="relative z-10 flex h-14 w-14 items-center justify-center border border-copper/40 bg-ink-raised font-mono text-[13px] text-copper">
-                    {step.index}
-                  </div>
-                  <h3 className="mt-5 font-display text-[17px] font-semibold text-paper">{step.title}</h3>
-                  <p className="mt-2 text-[14px] leading-relaxed text-paper-dim">{step.desc}</p>
-                </li>
-              </Reveal>
-            ))}
-          </ol>
+    <section id="process" className="bg-ink py-20 text-paper md:py-28">
+      <div className="mx-auto max-w-content px-5 md:px-10">
+        <div className="max-w-[40rem]">
+          <h2 className="text-balance font-display text-[34px] font-semibold leading-[1.05] tracking-[-0.03em] sm:text-[46px]">
+            How a project runs
+          </h2>
+          <p className="mt-5 text-pretty text-[17.5px] leading-relaxed text-paper/70">
+            Small, visible steps. You see something working early, and you can stop after any stage.
+          </p>
         </div>
+
+        <ol className="mt-14 grid gap-px overflow-hidden rounded-2xl bg-paper/10 md:grid-cols-2 lg:grid-cols-4">
+          {STEPS.map((step, i) => (
+            <li key={step.name} className="bg-ink p-6 md:p-7">
+              <span className="font-display text-[44px] font-semibold leading-none tracking-[-0.04em] text-teal-wash/30">
+                {i + 1}
+              </span>
+              <h3 className="mt-6 font-display text-[22px] font-semibold tracking-[-0.01em]">{step.name}</h3>
+              <p className="mt-1 text-[14px] text-amber">{step.time}</p>
+              <p className="mt-4 text-[15.5px] leading-relaxed text-paper/70">{step.body}</p>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   );
