@@ -1,60 +1,50 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
+import { Bricolage_Grotesque, Instrument_Sans } from "next/font/google";
 import "./globals.css";
 
-const display = Space_Grotesk({
+const display = Bricolage_Grotesque({
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
   variable: "--font-display",
   display: "swap",
 });
 
-const body = IBM_Plex_Sans({
+const body = Instrument_Sans({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
   variable: "--font-body",
   display: "swap",
 });
 
-const mono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-mono",
-  display: "swap",
-});
-
 const siteUrl = "https://rapidflowdesigns.com";
+const title = "RapidFlow Designs | AI Development & Implementation";
+const description =
+  "RapidFlow Designs designs, builds and runs AI systems — assistants, agents and automations — that connect to the tools your business already uses. Start with one workflow and keep everything we build.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "RapidFlow Designs | Hardware Schematic & PCB Design",
-  description:
-    "RapidFlow Designs provides hardware schematic and PCB design services — from electronics architecture through manufacturable layout, delivered as complete design files ready for procurement and prototyping.",
+  title,
+  description,
   keywords: [
-    "hardware schematic design",
-    "electronics engineering",
-    "PCB design",
-    "PCB layout",
-    "hardware engineering",
-    "circuit design",
-    "electronics design",
-    "BOM",
-    "PCB design services",
-    "schematic design services",
+    "AI development",
+    "AI implementation",
+    "AI agents",
+    "AI automation",
+    "workflow automation",
+    "LLM integration",
+    "RAG",
+    "AI consulting",
+    "custom AI solutions",
   ],
   openGraph: {
-    title: "RapidFlow Designs | Hardware Schematic & PCB Design",
-    description:
-      "Hardware schematic and PCB design, from electronics architecture through manufacturable layout — delivered as complete design files ready for procurement and prototyping.",
+    title,
+    description,
     url: siteUrl,
     siteName: "RapidFlow Designs",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "RapidFlow Designs | Hardware Schematic & PCB Design",
-    description:
-      "Hardware schematic and PCB design, from electronics architecture through manufacturable layout — delivered as complete design files ready for procurement and prototyping.",
+    title,
+    description,
   },
   icons: {
     icon: "/favicon.svg",
@@ -65,8 +55,8 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
-      <body className="font-body bg-ink text-paper antialiased">{children}</body>
+    <html lang="en" className={`${display.variable} ${body.variable}`}>
+      <body className="bg-paper font-body text-ink antialiased">{children}</body>
     </html>
   );
 }
