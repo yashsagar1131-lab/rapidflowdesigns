@@ -2,79 +2,86 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --grid-line: rgba(236, 236, 232, 0.045);
-}
-
-* {
-  scroll-behavior: smooth;
-}
-
 html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
   -webkit-font-smoothing: antialiased;
 }
 
 body {
-  background-color: #09090b;
-  color: #ecece8;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
-    scroll-behavior: auto !important;
-  }
+  background-color: #f3f4f1;
+  color: #15171c;
 }
 
 ::selection {
-  background: #c1875a;
-  color: #09090b;
-}
-
-/*
-  Reveal-on-scroll, fail-safe by design: content has no hidden state at
-  all unless the JS component explicitly opts an element into it (and even
-  then, the component forces visibility after 1.5s no matter what). If JS
-  never runs — disabled, blocked, or errors elsewhere on the page — content
-  simply has no animation classes applied and renders normally.
-*/
-.reveal-pending {
-  opacity: 0;
-  transform: translateY(16px);
-}
-.reveal-in {
-  animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  background: #1f6f5c;
+  color: #ffffff;
 }
 
 .text-balance {
   text-wrap: balance;
 }
 
-/* Focus visibility */
+.text-pretty {
+  text-wrap: pretty;
+}
+
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
-select:focus-visible {
-  outline: 2px solid #c1875a;
+select:focus-visible,
+summary:focus-visible {
+  outline: 2px solid #1f6f5c;
   outline-offset: 3px;
-  border-radius: 2px;
+  border-radius: 4px;
 }
 
-.grid-field {
-  background-image: var(--tw-gradient-stops), var(--tw-gradient-stops);
-  background-image: linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
-  background-size: 56px 56px;
+/* Hero flow demo: the only ambient motion on the page. */
+@keyframes step-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* Hero circuit diagram: fine reference-designator/silkscreen text renders
-   below legible size once the SVG is scaled down to phone width, so hide
-   it there rather than let it render as illegible clutter. */
-@media (max-width: 480px) {
-  .hero-svg-fine-detail {
+@keyframes travel {
+  from {
+    top: 0%;
+  }
+  to {
+    top: 100%;
+  }
+}
+
+.step-in {
+  animation: step-in 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.flow-dot {
+  animation: travel 1.6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .step-in,
+  .flow-dot {
+    animation: none !important;
+  }
+  .flow-dot {
     display: none;
   }
+}
+
+details > summary {
+  list-style: none;
+}
+details > summary::-webkit-details-marker {
+  display: none;
 }
