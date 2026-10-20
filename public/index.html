@@ -266,7 +266,7 @@ p{margin:0}
       <a href="#how">How it runs</a>
       <a href="#faq">Questions</a>
     </nav>
-    <a class="btn btn-dark" href="#contact" data-open-pilot>Request a pilot</a>
+    <a class="btn btn-dark" href="#contact" data-open-pilot>Apply for a pilot</a>
   </div>
 </header>
 
@@ -279,8 +279,7 @@ p{margin:0}
       <h1>EMI reminder calls, made in your borrower's language.</h1>
       <p class="lede">An AI assistant that makes your EMI reminder calls and sends your team a daily results sheet.</p>
       <div class="hero-actions">
-        <a class="btn btn-primary" href="#contact" data-open-pilot>Request a pilot place</a>
-        <a class="btn btn-quiet" href="#sample-call" data-live-link>Try the live demo</a>
+        <a class="btn btn-primary" href="#contact" data-open-pilot>Apply for a pilot</a>
       </div>
       <dl class="pilot-strip" aria-label="The pilot">
         <div><dt>Pilot</dt><dd>4 weeks</dd></div>
@@ -436,7 +435,7 @@ p{margin:0}
       <h2 id="contact-title">Three pilot places are open.</h2>
       <p>Prefer email? <a href="mailto:yash@rapidflowdesigns.com">yash@rapidflowdesigns.com</a></p>
     </div>
-    <a class="btn btn-primary" href="mailto:yash@rapidflowdesigns.com?subject=Pilot%20request" data-open-pilot>Request a pilot place</a>
+    <a class="btn btn-primary" href="mailto:yash@rapidflowdesigns.com?subject=Pilot%20request" data-open-pilot>Apply for a pilot</a>
   </div>
 </section>
 
@@ -453,7 +452,7 @@ p{margin:0}
   <div class="dlg-inner">
     <div class="dlg-head">
       <div>
-        <h2 id="dlg-title">Request a pilot place</h2>
+        <h2 id="dlg-title">Apply for a pilot</h2>
         <p>We'll reply within two working days to set up a 30-minute call.</p>
       </div>
       <button class="dlg-x" type="button" data-close aria-label="Close">
@@ -574,9 +573,6 @@ p{margin:0}
     muteBtn.setAttribute('aria-pressed', m ? 'true' : 'false'); muteBtn.textContent = m ? 'Unmute' : 'Mute';
   });
 
-  document.querySelectorAll('[data-live-link]').forEach(function (a) {
-    a.addEventListener('click', function () { loadSdk().catch(function () {}); });
-  });
   window.addEventListener('pagehide', function () { if (liveCall) endLive(false); });
 
   /* ---------- pilot request form (Web3Forms, same key as the previous site) ---------- */
