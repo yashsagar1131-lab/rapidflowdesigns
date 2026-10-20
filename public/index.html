@@ -10,7 +10,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://rapidflowdesigns.com/">
 <meta name="twitter:card" content="summary">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'%3E%3Crect width='22' height='22' rx='5' fill='%231F6F5C'/%3E%3Cpath d='M4 11H8L10 6L13 16L15 11H18' stroke='%23fff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2022%2022%22%3E%3Crect%20width=%2222%22%20height=%2222%22%20rx=%225%22%20fill=%22%231F6F5C%22/%3E%3Cg%20stroke=%22%23FFFFFF%22%20stroke-width=%221.8%22%20stroke-linecap=%22round%22%20fill=%22none%22%3E%3Cpath%20d=%22M5%208.5V13.5%22%20/%3E%3Cpath%20d=%22M8%206V16%22%20/%3E%3Cpath%20d=%22M11%204V18%22%20/%3E%3Cpath%20d=%22M14%207V15%22%20/%3E%3Cpath%20d=%22M17%209V13%22%20/%3E%3C/g%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Instrument+Sans:wght@400;500;600&family=Mukta:wght@400;500;600&display=swap" rel="stylesheet">
@@ -83,7 +83,6 @@ p{margin:0}
 .pilot-strip div:last-child{border-right:0;margin-right:0;padding-right:0}
 .pilot-strip dt{font-size:12.5px;color:var(--ink-3);line-height:1.2}
 .pilot-strip dd{margin:3px 0 0;font:600 17px/1.2 var(--display);letter-spacing:-0.01em;color:var(--ink)}
-.hero-note{margin-top:10px;color:var(--ink-3);font-size:14px}
 @media (max-width:560px){
   .pilot-strip{grid-template-columns:1fr 1fr}
   .pilot-strip div{margin:0;padding:12px 0;border-right:0}
@@ -100,6 +99,28 @@ p{margin:0}
 .play{flex:none;display:inline-flex;align-items:center;gap:9px;background:var(--ink);color:#fff;border:0;border-radius:999px;padding:9px 15px 9px 10px;font:600 14px/1 var(--body);cursor:pointer}
 .play .ic{width:22px;height:22px;border-radius:50%;background:var(--amber);display:grid;place-items:center}
 .play .ic svg{width:10px;height:10px}
+@media (max-height:700px) and (min-width:961px){
+  .call-top{padding:9px 18px}.live{padding-top:12px;padding-bottom:14px;gap:9px}
+}
+.live{padding:18px 18px 20px;display:flex;flex-direction:column;gap:14px}
+.live-status{display:flex;align-items:center;gap:10px;font-weight:600;font-size:15px}
+.live-status .pulse{width:9px;height:9px;border-radius:50%;background:var(--ink-3)}
+.live[data-state=connecting] .pulse,.live[data-state=ringing] .pulse{background:var(--amber)}
+.live[data-state=active] .pulse{background:var(--green);animation:blink 1.4s ease-in-out infinite}
+.live[data-state=error] .pulse{background:#B3261E}
+@keyframes blink{50%{opacity:.35}}
+@media (prefers-reduced-motion:reduce){.live[data-state=active] .pulse{animation:none}}
+.meter{display:flex;align-items:center;gap:4px;height:26px}
+.meter i{display:block;width:5px;height:4px;border-radius:3px;background:var(--green-tint);transition:height .1s linear,background-color .1s}
+.live[data-state=active] .meter i{background:var(--green)}
+.live-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.live-btn{display:inline-flex;align-items:center;gap:9px;background:var(--green);color:#fff;border:0;border-radius:999px;padding:11px 18px;font:600 15px/1 var(--body);cursor:pointer}
+.live-btn:hover{background:var(--green-deep)}
+.live-btn[disabled]{opacity:.6;cursor:default}
+.live-btn.end{background:var(--ink)}
+.live-ghost{background:transparent;border:1px solid var(--line);color:var(--ink);border-radius:999px;padding:10px 16px;font:600 14px/1 var(--body);cursor:pointer}
+.live-ghost[hidden],.live-btn[hidden]{display:none}
+.live-note{font-size:12.5px;color:var(--ink-3);line-height:1.45}
 .transcript{list-style:none;margin:0;padding:16px 18px 4px;display:flex;flex-direction:column;gap:10px}
 .line{display:grid;grid-template-columns:62px minmax(0,1fr);gap:10px;align-items:baseline;transition:opacity .35s ease}
 .line .who{font-size:12.5px;font-weight:600;color:var(--ink-3);padding-top:2px}
@@ -237,15 +258,15 @@ p{margin:0}
 <header class="site-header">
   <div class="wrap">
     <a class="brand" href="#top" aria-label="RapidFlow Designs, back to top">
-      <svg width="26" height="26" viewBox="0 0 22 22" aria-hidden="true"><rect width="22" height="22" rx="5" fill="#1F6F5C"/><path d="M4 11H8L10 6L13 16L15 11H18" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      <svg width="26" height="26" viewBox="0 0 22 22" aria-hidden="true"><rect width="22" height="22" rx="5" fill="#1F6F5C"/><g stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" fill="none"><path d="M5 8.5V13.5" /><path d="M8 6V16" /><path d="M11 4V18" /><path d="M14 7V15" /><path d="M17 9V13" /></g></svg>
       RapidFlow Designs
     </a>
     <nav class="nav" aria-label="Main">
-      <a href="#sample-call">Sample call</a>
+      <a href="#sample-call">Demo</a>
       <a href="#how">How it runs</a>
       <a href="#faq">Questions</a>
     </nav>
-    <a class="btn btn-dark" href="#contact" data-open-pilot>Request a pilot</a>
+    <a class="btn btn-dark" href="#contact" data-open-pilot>Apply for a pilot</a>
   </div>
 </header>
 
@@ -256,60 +277,37 @@ p{margin:0}
     <div>
       <p class="hero-kicker"><span class="dot" aria-hidden="true"></span>For NBFCs and small lenders</p>
       <h1>EMI reminder calls, made in your borrower's language.</h1>
-      <p class="lede">An AI calling assistant that makes the routine reminder calls and sends your team a daily results sheet.</p>
+      <p class="lede">An AI assistant that makes your EMI reminder calls and sends your team a daily results sheet.</p>
       <div class="hero-actions">
-        <a class="btn btn-primary" href="#contact" data-open-pilot>Request a pilot place</a>
-        <a class="btn btn-quiet" href="#sample-call" data-play-link>Play the sample call</a>
+        <a class="btn btn-primary" href="#contact" data-open-pilot>Apply for a pilot</a>
       </div>
       <dl class="pilot-strip" aria-label="The pilot">
         <div><dt>Pilot</dt><dd>4 weeks</dd></div>
         <div><dt>Scope</dt><dd>1 call flow</dd></div>
-        <div><dt>Fee</dt><dd>Small, flat</dd></div>
+        <div><dt>Fee</dt><dd>Fixed, introductory</dd></div>
         <div><dt>Places</dt><dd>3 open</dd></div>
       </dl>
-      <p class="hero-note">Measured against your current process. No obligation to continue.</p>
     </div>
 
-    <figure class="call" id="sample-call" aria-labelledby="call-title">
+    <figure class="call" id="sample-call" data-mode="live" aria-labelledby="call-title">
       <div class="call-top">
         <div class="call-who">
-          <div class="avatar" aria-hidden="true">RK</div>
           <div>
-            <strong id="call-title">Sample call: EMI due in 3 days</strong>
-            <span>In Hindi. Fictional borrower and lender.</span>
+            <strong id="call-title">Talk to the assistant</strong>
+            <span>You play the borrower. Hindi or English.</span>
           </div>
         </div>
-        <button class="play" type="button" aria-pressed="false" aria-controls="transcript">
-          <span class="ic" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M2 1l7 4-7 4z" fill="#15171C"/></svg></span>
-          <span class="lbl">Play</span>
-        </button>
       </div>
-      <ol class="transcript" id="transcript" aria-live="polite">
-        <li class="line ai" data-t="0">
-          <div class="who">Assistant</div>
-          <div><span class="hi" lang="hi">नमस्ते रमेश जी, यह डेमो फ़ाइनेंस की ऑटोमेटेड कॉल है। कॉल रिकॉर्ड हो रही है।</span><span class="en">Hello Ramesh ji, this is an automated call from Demo Finance. It is being recorded.</span></div>
-        </li>
-        <li class="line ai" data-t="6">
-          <div class="who">Assistant</div>
-          <div><span class="hi" lang="hi">आपकी ₹4,850 की EMI 23 अक्टूबर को है। क्या आप तब तक भुगतान कर पाएँगे?</span><span class="en">Your EMI of ₹4,850 is due on 23 October. Will you be able to pay by then?</span></div>
-        </li>
-        <li class="line" data-t="13">
-          <div class="who">Borrower</div>
-          <div><span class="hi" lang="hi">23 को नहीं, 25 तारीख़ तक कर दूँगा।</span><span class="en">Not on the 23rd. I'll pay by the 25th.</span></div>
-        </li>
-        <li class="line ai" data-t="19">
-          <div class="who">Assistant</div>
-          <div><span class="hi" lang="hi">ठीक है, 25 अक्टूबर नोट कर ली है। धन्यवाद।</span><span class="en">Noted, 25 October. Thank you.</span></div>
-        </li>
-      </ol>
-      <dl class="outcome" aria-label="What your team sees after the call">
-        <div><dt>Outcome</dt><dd>Promise to pay</dd></div>
-        <div><dt>Promised date</dt><dd>25 Oct</dd></div>
-        <div><dt>Next step</dt><dd>Reminder 24 Oct</dd></div>
-      </dl>
-      <!-- To add the recorded demo: put the file next to this page and set data-src, e.g. data-src="sample-call-hi.mp3".
-           Set each line's data-t (seconds) to when it starts in the recording. -->
-      <audio id="call-audio" preload="none" data-src=""></audio>
+      <div class="live" id="live" data-state="idle">
+        <div class="live-status"><span class="pulse" aria-hidden="true"></span><span id="live-msg" aria-live="polite">Ready</span></div>
+        <div class="meter" id="meter" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="live-actions">
+          <button class="live-btn" type="button" id="live-start">Start the call</button>
+          <button class="live-btn end" type="button" id="live-end" hidden>End call</button>
+          <button class="live-ghost" type="button" id="live-mute" hidden aria-pressed="false">Mute</button>
+        </div>
+        <p class="live-note">Uses your microphone. Calls are recorded and last up to 3 minutes.</p>
+      </div>
     </figure>
   </div>
 </section>
@@ -385,7 +383,7 @@ p{margin:0}
       <dl class="terms">
         <div><dt>Accounts</dt><dd>300 to 1,000 borrowers, chosen by you</dd></div>
         <div><dt>Comparison</dt><dd>Half get the assistant's calls, half stay as today</dd></div>
-        <div><dt>Fee</dt><dd>Small and flat, agreed in writing first</dd></div>
+        <div><dt>Fee</dt><dd>Fixed and introductory, agreed in writing before we start</dd></div>
         <div><dt>Afterwards</dt><dd>No obligation to continue</dd></div>
         <div><dt>In return</dt><dd>Permission to publish the results, anonymised if you prefer. You approve the write-up.</dd></div>
       </dl>
@@ -437,7 +435,7 @@ p{margin:0}
       <h2 id="contact-title">Three pilot places are open.</h2>
       <p>Prefer email? <a href="mailto:yash@rapidflowdesigns.com">yash@rapidflowdesigns.com</a></p>
     </div>
-    <a class="btn btn-primary" href="mailto:yash@rapidflowdesigns.com?subject=Pilot%20request" data-open-pilot>Request a pilot place</a>
+    <a class="btn btn-primary" href="mailto:yash@rapidflowdesigns.com?subject=Pilot%20request" data-open-pilot>Apply for a pilot</a>
   </div>
 </section>
 
@@ -454,7 +452,7 @@ p{margin:0}
   <div class="dlg-inner">
     <div class="dlg-head">
       <div>
-        <h2 id="dlg-title">Request a pilot place</h2>
+        <h2 id="dlg-title">Apply for a pilot</h2>
         <p>We'll reply within two working days to set up a 30-minute call.</p>
       </div>
       <button class="dlg-x" type="button" data-close aria-label="Close">
@@ -493,76 +491,102 @@ p{margin:0}
     dlg.addEventListener('close', function () { root.classList.remove('modal-open'); });
   }
 
-  /* ---------- sample call ---------- */
   var card = document.getElementById('sample-call');
-  var list = document.getElementById('transcript');
-  var lines = Array.prototype.slice.call(list.querySelectorAll('.line'));
-  var btn = card.querySelector('.play');
-  var lbl = btn.querySelector('.lbl');
-  var audio = document.getElementById('call-audio');
-  var src = audio.getAttribute('data-src');
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var timers = [];
-  var playing = false;
-  var pauseIcon = '<svg viewBox="0 0 10 10"><rect x="2" y="1.5" width="2" height="7" fill="#15171C"/><rect x="6" y="1.5" width="2" height="7" fill="#15171C"/></svg>';
-  var playIcon = btn.querySelector('.ic').innerHTML;
 
-  function setButton(state) {
-    btn.setAttribute('aria-pressed', state === 'playing' ? 'true' : 'false');
-    btn.querySelector('.ic').innerHTML = state === 'playing' ? pauseIcon : playIcon;
-    if (state === 'playing') lbl.textContent = 'Stop';
-    else if (state === 'done') lbl.textContent = src ? 'Play again' : 'Replay';
-    else lbl.innerHTML = src ? 'Play <span class="lbl-long">the call</span>' : 'Play';
-  }
-  function show(i) {
-    lines.forEach(function (l, j) { l.classList.toggle('shown', j <= i); l.classList.toggle('current', j === i); });
-  }
-  function reset() {
-    timers.forEach(clearTimeout); timers = [];
-    list.classList.remove('is-playing'); card.classList.remove('is-playing');
-    lines.forEach(function (l) { l.classList.remove('shown', 'current'); });
-  }
-  function finish() {
-    playing = false;
-    list.classList.remove('is-playing'); card.classList.remove('is-playing'); card.classList.add('is-done');
-    lines.forEach(function (l) { l.classList.add('shown'); l.classList.remove('current'); });
-    setButton('done');
-  }
-  function start() {
-    reset(); card.classList.remove('is-done');
-    playing = true; setButton('playing');
-    if (reduce && !src) { finish(); return; }
-    list.classList.add('is-playing'); card.classList.add('is-playing');
-    if (src) {
-      if (!audio.src) audio.src = src;
-      audio.currentTime = 0; audio.play();
-      return;
+  /* ---------- live call (Bolna Web Call SDK, loaded only when needed) ---------- */
+  var SDK_URL = '/vendor/bolna-web-call-3.0.1.min.js';
+  var SESSION_URL = '/api/bolna-session';
+  var MAX_LIVE_MS = 180000;
+  var live = document.getElementById('live');
+  var liveMsg = document.getElementById('live-msg');
+  var startBtn = document.getElementById('live-start');
+  var endBtn = document.getElementById('live-end');
+  var muteBtn = document.getElementById('live-mute');
+  var bars = Array.prototype.slice.call(document.querySelectorAll('#meter i'));
+  var liveCall = null, liveTimer = null, sdkPromise = null, cdTimer = null, cdLeft = 0;
+  var COOLDOWN_SECONDS = 5;
+
+  function loadSdk() {
+    if (window.BolnaWebCall) return Promise.resolve();
+    if (!sdkPromise) {
+      sdkPromise = new Promise(function (resolve, reject) {
+        var s = document.createElement('script');
+        s.src = SDK_URL; s.onload = resolve;
+        s.onerror = function () { sdkPromise = null; reject(new Error('sdk')); };
+        document.head.appendChild(s);
+      });
     }
-    /* No recording yet: step through the transcript on its own. */
-    var t = 0;
-    lines.forEach(function (l, i) {
-      timers.push(setTimeout(function () { show(i); }, t));
-      t += 900 + l.querySelector('.en').textContent.length * 38;
+    return sdkPromise;
+  }
+  function setLive(state, message) {
+    live.setAttribute('data-state', state);
+    if (message) liveMsg.textContent = message;
+    var inCall = state === 'connecting' || state === 'ringing' || state === 'active';
+    startBtn.hidden = inCall; endBtn.hidden = !inCall; muteBtn.hidden = state !== 'active';
+    startBtn.disabled = false;
+    if (!inCall) { bars.forEach(function (b) { b.style.height = ''; }); }
+    startBtn.textContent = state === 'ended' || state === 'error' ? 'Start again' : 'Start the call';
+    if (cdTimer) { startBtn.disabled = true; startBtn.textContent = 'Try again in ' + cdLeft + 's'; }
+  }
+  /* Short pause between calls (matches the server-side limit). */
+  function cooldown(sec) {
+    clearInterval(cdTimer); cdLeft = sec;
+    cdTimer = setInterval(function () {
+      cdLeft -= 1;
+      if (cdLeft <= 0) { clearInterval(cdTimer); cdTimer = null; startBtn.disabled = false; startBtn.textContent = 'Start again'; return; }
+      startBtn.textContent = 'Try again in ' + cdLeft + 's';
+    }, 1000);
+    startBtn.disabled = true; startBtn.textContent = 'Try again in ' + cdLeft + 's';
+  }
+  function friendly(e) {
+    var code = e && e.code;
+    if (code === 'microphone_denied') return 'Microphone is blocked. Allow it in your browser’s address bar, then try again.';
+    if (code === 'at_capacity') return 'Please try again in a few seconds.';
+    if (code === 'autoplay_blocked') return 'Your browser blocked the audio. Click Start again.';
+    return 'The live demo is not available right now. Please email yash@rapidflowdesigns.com and we will set up a call.';
+  }
+  function endLive(message) {
+    clearTimeout(liveTimer);
+    var c = liveCall; liveCall = null;
+    if (c) { try { c.stop(); } catch (e) {} }
+    muteBtn.setAttribute('aria-pressed', 'false'); muteBtn.textContent = 'Mute';
+    if (message !== false) setLive('ended', message || 'Call ended. Thanks for trying it.');
+    cooldown(COOLDOWN_SECONDS);
+  }
+  function startLive() {
+    if (liveCall) return;
+    setLive('connecting', 'Connecting…'); startBtn.hidden = true; endBtn.hidden = false;
+    loadSdk().then(function () {
+      var call = new window.BolnaWebCall({ sessionUrl: SESSION_URL });
+      liveCall = call;
+      call.on('state-change', function (s) {
+        if (call !== liveCall) return;
+        if (s === 'ringing') setLive('ringing', 'Calling…');
+        else if (s === 'active') setLive('active', 'On the call');
+      });
+      call.on('volume-level', function (v) {
+        var n = Math.round(Math.min(1, v * 1.6) * bars.length);
+        bars.forEach(function (b, i) { b.style.height = (i < n ? 8 + (i % 4) * 4 + 6 : 4) + 'px'; });
+      });
+      call.on('call-end', function () { if (call === liveCall) endLive(); });
+      call.on('error', function (e) { if (call === liveCall) { endLive(false); setLive('error', friendly(e)); cooldown(COOLDOWN_SECONDS); } });
+      liveTimer = setTimeout(function () { endLive('The demo call has reached its 3 minute limit.'); }, MAX_LIVE_MS);
+      return call.start();
+    }).catch(function (e) {
+      if (!liveCall && live.getAttribute('data-state') === 'error') return;
+      endLive(false); setLive('error', friendly(e));
     });
-    timers.push(setTimeout(finish, t));
   }
-  function stop() {
-    if (src) audio.pause();
-    reset(); playing = false; card.classList.remove('is-done'); setButton('idle');
-  }
-  if (src) {
-    audio.addEventListener('timeupdate', function () {
-      var idx = -1;
-      lines.forEach(function (l, i) { if (audio.currentTime >= parseFloat(l.getAttribute('data-t') || 0)) idx = i; });
-      if (idx >= 0) show(idx);
-    });
-    audio.addEventListener('ended', finish);
-  }
-  setButton('idle');
-  btn.addEventListener('click', function () { playing ? stop() : start(); });
-  document.querySelectorAll('[data-play-link]').forEach(function (a) {
-    a.addEventListener('click', function () { if (!playing) setTimeout(start, reduce ? 0 : 450); });
+  startBtn.addEventListener('click', startLive);
+  endBtn.addEventListener('click', function () { endLive(); });
+  muteBtn.addEventListener('click', function () {
+    if (!liveCall) return;
+    var m = muteBtn.getAttribute('aria-pressed') !== 'true';
+    try { liveCall.setMuted(m); } catch (e) {}
+    muteBtn.setAttribute('aria-pressed', m ? 'true' : 'false'); muteBtn.textContent = m ? 'Unmute' : 'Mute';
   });
+
+  window.addEventListener('pagehide', function () { if (liveCall) endLive(false); });
 
   /* ---------- pilot request form (Web3Forms, same key as the previous site) ---------- */
   var form = document.getElementById('pilot-form');
