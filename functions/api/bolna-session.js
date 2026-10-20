@@ -14,7 +14,7 @@ const ALLOWED_ORIGINS = [
   "https://www.rapidflowdesigns.com",
 ];
 const PREVIEW_HOST = /^https:\/\/[a-z0-9-]+\.rapidflowdesigns\.pages\.dev$/;
-const COOLDOWN_SECONDS = 20; // per visitor, per Cloudflare location (best effort)
+const COOLDOWN_SECONDS = 5; // per visitor, per Cloudflare location (best effort)
 
 const json = (body, status = 200) =>
   new Response(JSON.stringify(body), {

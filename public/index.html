@@ -503,7 +503,8 @@ p{margin:0}
   var endBtn = document.getElementById('live-end');
   var muteBtn = document.getElementById('live-mute');
   var bars = Array.prototype.slice.call(document.querySelectorAll('#meter i'));
-  var liveCall = null, liveTimer = null, sdkPromise = null;
+  var liveCall = null, liveTimer = null, sdkPromise = null, cdTimer = null, cdLeft = 0;
+  var COOLDOWN_SECONDS = 5;
 
   function loadSdk() {
     if (window.BolnaWebCall) return Promise.resolve();
@@ -525,11 +526,22 @@ p{margin:0}
     startBtn.disabled = false;
     if (!inCall) { bars.forEach(function (b) { b.style.height = ''; }); }
     startBtn.textContent = state === 'ended' || state === 'error' ? 'Start again' : 'Start the call';
+    if (cdTimer) { startBtn.disabled = true; startBtn.textContent = 'Try again in ' + cdLeft + 's'; }
+  }
+  /* Short pause between calls (matches the server-side limit). */
+  function cooldown(sec) {
+    clearInterval(cdTimer); cdLeft = sec;
+    cdTimer = setInterval(function () {
+      cdLeft -= 1;
+      if (cdLeft <= 0) { clearInterval(cdTimer); cdTimer = null; startBtn.disabled = false; startBtn.textContent = 'Start again'; return; }
+      startBtn.textContent = 'Try again in ' + cdLeft + 's';
+    }, 1000);
+    startBtn.disabled = true; startBtn.textContent = 'Try again in ' + cdLeft + 's';
   }
   function friendly(e) {
     var code = e && e.code;
     if (code === 'microphone_denied') return 'Microphone is blocked. Allow it in your browser’s address bar, then try again.';
-    if (code === 'at_capacity') return 'All lines are busy. Please try again in a minute.';
+    if (code === 'at_capacity') return 'Please try again in a few seconds.';
     if (code === 'autoplay_blocked') return 'Your browser blocked the audio. Click Start again.';
     return 'The live demo is not available right now. Please email yash@rapidflowdesigns.com and we will set up a call.';
   }
@@ -539,6 +551,7 @@ p{margin:0}
     if (c) { try { c.stop(); } catch (e) {} }
     muteBtn.setAttribute('aria-pressed', 'false'); muteBtn.textContent = 'Mute';
     if (message !== false) setLive('ended', message || 'Call ended. Thanks for trying it.');
+    cooldown(COOLDOWN_SECONDS);
   }
   function startLive() {
     if (liveCall) return;
@@ -556,7 +569,7 @@ p{margin:0}
         bars.forEach(function (b, i) { b.style.height = (i < n ? 8 + (i % 4) * 4 + 6 : 4) + 'px'; });
       });
       call.on('call-end', function () { if (call === liveCall) endLive(); });
-      call.on('error', function (e) { if (call === liveCall) { endLive(false); setLive('error', friendly(e)); } });
+      call.on('error', function (e) { if (call === liveCall) { endLive(false); setLive('error', friendly(e)); cooldown(COOLDOWN_SECONDS); } });
       liveTimer = setTimeout(function () { endLive('The demo call has reached its 3 minute limit.'); }, MAX_LIVE_MS);
       return call.start();
     }).catch(function (e) {
