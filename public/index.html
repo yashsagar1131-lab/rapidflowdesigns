@@ -83,7 +83,6 @@ p{margin:0}
 .pilot-strip div:last-child{border-right:0;margin-right:0;padding-right:0}
 .pilot-strip dt{font-size:12.5px;color:var(--ink-3);line-height:1.2}
 .pilot-strip dd{margin:3px 0 0;font:600 17px/1.2 var(--display);letter-spacing:-0.01em;color:var(--ink)}
-.hero-note{margin-top:10px;color:var(--ink-3);font-size:14px}
 @media (max-width:560px){
   .pilot-strip{grid-template-columns:1fr 1fr}
   .pilot-strip div{margin:0;padding:12px 0;border-right:0}
@@ -114,9 +113,6 @@ p{margin:0}
 .meter{display:flex;align-items:center;gap:4px;height:26px}
 .meter i{display:block;width:5px;height:4px;border-radius:3px;background:var(--green-tint);transition:height .1s linear,background-color .1s}
 .live[data-state=active] .meter i{background:var(--green)}
-.live-try{font-size:13.5px;color:var(--ink-2)}
-.chips{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
-.chips li{background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-family:var(--deva);font-size:15px;line-height:1.3;color:var(--ink)}
 .live-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
 .live-btn{display:inline-flex;align-items:center;gap:9px;background:var(--green);color:#fff;border:0;border-radius:999px;padding:11px 18px;font:600 15px/1 var(--body);cursor:pointer}
 .live-btn:hover{background:var(--green-deep)}
@@ -281,7 +277,7 @@ p{margin:0}
     <div>
       <p class="hero-kicker"><span class="dot" aria-hidden="true"></span>For NBFCs and small lenders</p>
       <h1>EMI reminder calls, made in your borrower's language.</h1>
-      <p class="lede">An AI calling assistant that makes the routine reminder calls and sends your team a daily results sheet.</p>
+      <p class="lede">An AI assistant that makes your EMI reminder calls and sends your team a daily results sheet.</p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="#contact" data-open-pilot>Request a pilot place</a>
         <a class="btn btn-quiet" href="#sample-call" data-live-link>Try the live demo</a>
@@ -292,37 +288,26 @@ p{margin:0}
         <div><dt>Fee</dt><dd>Small, flat</dd></div>
         <div><dt>Places</dt><dd>3 open</dd></div>
       </dl>
-      <p class="hero-note">Measured against your current process. No obligation to continue.</p>
     </div>
 
     <figure class="call" id="sample-call" data-mode="live" aria-labelledby="call-title">
       <div class="call-top">
         <div class="call-who">
-          <div class="avatar" aria-hidden="true">RK</div>
           <div>
-            <strong id="call-title">Try the assistant yourself</strong>
-            <span>You play the borrower. In Hindi or English. Fictional lender.</span>
+            <strong id="call-title">Talk to the assistant</strong>
+            <span>You play the borrower. Hindi or English.</span>
           </div>
         </div>
       </div>
       <div class="live" id="live" data-state="idle">
-        <div class="live-status"><span class="pulse" aria-hidden="true"></span><span id="live-msg" aria-live="polite">Ready when you are</span></div>
+        <div class="live-status"><span class="pulse" aria-hidden="true"></span><span id="live-msg" aria-live="polite">Ready</span></div>
         <div class="meter" id="meter" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-        <div>
-          <p class="live-try">You play Ramesh Kumar, who has an EMI due. Try saying:</p>
-          <ul class="chips" lang="hi">
-            <li>हाँ, बोलिए</li>
-            <li>25 तारीख़ तक कर दूँगा</li>
-            <li>मैं पेमेंट कर चुका हूँ</li>
-            <li lang="en">Can I speak to a person?</li>
-          </ul>
-        </div>
         <div class="live-actions">
           <button class="live-btn" type="button" id="live-start">Start the call</button>
           <button class="live-btn end" type="button" id="live-end" hidden>End call</button>
           <button class="live-ghost" type="button" id="live-mute" hidden aria-pressed="false">Mute</button>
         </div>
-        <p class="live-note">Uses your microphone; headphones work best. Calls are recorded and last up to 3 minutes. Please don’t share personal or financial details.</p>
+        <p class="live-note">Uses your microphone. Calls are recorded and last up to 3 minutes.</p>
       </div>
     </figure>
   </div>
@@ -565,7 +550,7 @@ p{margin:0}
       call.on('state-change', function (s) {
         if (call !== liveCall) return;
         if (s === 'ringing') setLive('ringing', 'Calling…');
-        else if (s === 'active') setLive('active', 'On the call. Speak when she greets you.');
+        else if (s === 'active') setLive('active', 'On the call');
       });
       call.on('volume-level', function (v) {
         var n = Math.round(Math.min(1, v * 1.6) * bars.length);
