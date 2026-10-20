@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RapidFlow Designs | AI calling assistant for EMI reminders</title>
+<meta name="description" content="An AI calling assistant for NBFCs and small lenders. It makes EMI reminder calls in the borrower's language, records who promised to pay, and sends your team a daily results sheet. Four-week pilots, three places.">
+<meta property="og:title" content="EMI reminder calls in your borrower's language">
+<meta property="og:description" content="An AI calling assistant for NBFCs and small lenders. Four-week pilots for three lenders.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://rapidflowdesigns.com/">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'%3E%3Crect width='22' height='22' rx='5' fill='%231F6F5C'/%3E%3Cpath d='M4 11H8L10 6L13 16L15 11H18' stroke='%23fff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Instrument+Sans:wght@400;500;600&family=Mukta:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3F4F1;
+  --surface:#FFFFFF;
+  --ink:#15171C;
+  --ink-2:#4A4F57;
+  --ink-3:#6E737B;
+  --line:#D9DCD6;
+  --green:#1F6F5C;
+  --green-deep:#164F42;
+  --green-tint:#E3EEE9;
+  --amber:#F2A93B;
+  --amber-tint:#FBEFD9;
+  --display:"Bricolage Grotesque", "Instrument Sans", system-ui, sans-serif;
+  --body:"Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --deva:"Mukta", "Nirmala UI", "Noto Sans Devanagari", sans-serif;
+  --wrap:1180px;
+  --gutter:clamp(16px, 4vw, 40px);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+img,svg{display:block}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--green);outline-offset:3px;border-radius:4px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 var(--gutter)}
+h1,h2,h3{font-family:var(--display);font-weight:600;letter-spacing:-0.02em;margin:0;color:var(--ink)}
+h2{font-size:clamp(30px,4vw,46px);line-height:1.08}
+h3{font-size:20px;line-height:1.3;letter-spacing:-0.01em}
+p{margin:0}
+.lede{color:var(--ink-2);font-size:18px;max-width:58ch}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font:600 16px/1 var(--body);padding:15px 22px;border-radius:10px;text-decoration:none;border:1px solid transparent;cursor:pointer;transition:background-color .15s}
+.btn-primary{background:var(--green);color:#fff}
+.btn-primary:hover{background:var(--green-deep)}
+.btn-quiet{background:var(--surface);color:var(--ink);border-color:var(--line)}
+.btn-quiet:hover{border-color:var(--ink-3)}
+.btn-dark{background:var(--ink);color:var(--bg);padding:11px 16px;font-size:15px}
+
+/* header */
+.site-header{position:sticky;top:0;z-index:20;background:rgba(243,244,241,.94);backdrop-filter:saturate(1.2) blur(8px);border-bottom:1px solid var(--line)}
+.site-header .wrap{display:flex;align-items:center;justify-content:space-between;height:68px;gap:24px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:600;font-size:17px}
+.nav{display:flex;gap:28px}
+.nav a{text-decoration:none;color:var(--ink-2);font-size:15px}
+.nav a:hover{color:var(--ink)}
+@media (max-width:860px){.nav{display:none}}
+
+/* hero */
+.hero{padding:clamp(40px,7vw,88px) 0 clamp(56px,8vw,104px)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(32px,5vw,72px);align-items:start}
+@media (max-width:960px){.hero-grid{grid-template-columns:1fr}}
+.hero-kicker{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:500;color:var(--green-deep);background:var(--green-tint);padding:6px 12px;border-radius:999px;margin-bottom:22px}
+.hero-kicker .dot{width:7px;height:7px;border-radius:50%;background:var(--green)}
+.hero h1{font-size:clamp(38px,5.4vw,64px);line-height:1.03;letter-spacing:-0.035em;max-width:14ch}
+.hero .lede{margin-top:22px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.hero-note{margin-top:18px;color:var(--ink-3);font-size:14.5px}
+
+/* sample call */
+.call{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:0 1px 0 rgba(21,23,28,.04),0 24px 48px -28px rgba(21,23,28,.28);overflow:hidden}
+.call-top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 20px;border-bottom:1px solid var(--line)}
+.call-who{display:flex;align-items:center;gap:12px;min-width:0}
+.avatar{flex:none;width:40px;height:40px;border-radius:50%;background:var(--green-tint);color:var(--green-deep);display:grid;place-items:center;font-weight:600;font-size:15px}
+.call-who strong{display:block;font-size:15.5px;line-height:1.3}
+.call-who span{display:block;font-size:13.5px;color:var(--ink-3);line-height:1.35}
+.play{flex:none;display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:#fff;border:0;border-radius:999px;padding:10px 16px 10px 12px;font:600 14.5px/1 var(--body);cursor:pointer}
+.play .ic{width:22px;height:22px;border-radius:50%;background:var(--amber);display:grid;place-items:center}
+.play .ic svg{width:10px;height:10px}
+.play[aria-pressed="true"] .ic{background:#fff}
+.call-meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-bottom:1px solid var(--line);background:#FAFBF9}
+.call-meta div{padding:12px 20px}
+.call-meta div+div{border-left:1px solid var(--line)}
+.call-meta dt{font-size:12.5px;color:var(--ink-3)}
+.call-meta dd{margin:2px 0 0;font-weight:600;font-size:15px}
+.transcript{list-style:none;margin:0;padding:18px 20px 6px;display:flex;flex-direction:column;gap:12px;min-height:356px}
+.line{display:grid;grid-template-columns:64px minmax(0,1fr);gap:12px;align-items:baseline;transition:opacity .35s ease}
+.line .who{font-size:12.5px;font-weight:600;color:var(--ink-3);padding-top:3px}
+.line.ai .who{color:var(--green)}
+.line .hi{display:inline;font-family:var(--deva);font-size:17.5px;line-height:1.45;color:var(--ink)}
+.line .en{display:block;font-size:13.5px;line-height:1.45;color:var(--ink-3);margin-top:2px}
+.line.ai .hi{color:var(--green-deep)}
+.transcript.is-playing .line{opacity:.18}
+.transcript.is-playing .line.shown{opacity:1}
+.line.current .hi{background:linear-gradient(transparent 62%, var(--amber-tint) 62%)}
+.outcome{margin:10px 20px 20px;border-radius:12px;background:var(--green-tint);padding:14px 16px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;transition:opacity .35s ease}
+.call.is-playing .outcome{opacity:.18}
+.call.is-done .outcome{opacity:1}
+.outcome dt{font-size:12.5px;color:var(--green-deep);opacity:.8}
+.outcome dd{margin:2px 0 0;font-weight:600;font-size:15px;color:var(--green-deep)}
+.call-foot{padding:0 20px 18px;font-size:13px;color:var(--ink-3)}
+@media (max-width:560px){
+  .call-meta,.outcome{grid-template-columns:1fr 1fr}
+  .call-meta div:nth-child(3){grid-column:1 / -1;border-left:0;border-top:1px solid var(--line)}
+  .outcome div:nth-child(3){grid-column:1 / -1}
+  .line{grid-template-columns:1fr;gap:2px}
+  .transcript{min-height:0}
+  .play .lbl-long{display:none}
+  .call-top{flex-wrap:wrap}
+  .avatar{display:none}
+  .call-who{flex:1 1 100%}
+}
+
+/* sections */
+.section{padding:clamp(64px,9vw,112px) 0}
+.section-head{max-width:640px;margin-bottom:clamp(32px,5vw,52px)}
+.section-head .lede{margin-top:16px}
+.band-white{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+
+/* split: what it does / what stays with your team */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,56px)}
+@media (max-width:760px){.split{grid-template-columns:1fr}}
+.split h3{padding-bottom:14px;border-bottom:2px solid var(--ink);margin-bottom:6px}
+.split .stays h3{border-bottom-color:var(--line)}
+.ticks{list-style:none;margin:0;padding:0}
+.ticks li{padding:16px 0;border-bottom:1px solid var(--line)}
+.ticks li strong{display:block;font-weight:600;font-size:16.5px}
+.ticks li span{display:block;color:var(--ink-2);font-size:15.5px;margin-top:2px}
+
+/* pilot offer */
+.offer{background:var(--green-deep);color:#EAF2EE}
+.offer h2{color:#fff}
+.offer .lede{color:#C9DDD5}
+.offer-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(32px,5vw,72px);align-items:start}
+@media (max-width:900px){.offer-grid{grid-template-columns:1fr}}
+.places{margin-top:32px;display:flex;align-items:center;gap:14px}
+.places .seats{display:flex;gap:6px}
+.places .seat{width:30px;height:30px;border-radius:8px;border:1.5px solid #8FB8A9}
+.places p{font-size:15px;color:#C9DDD5}
+.terms{margin:0;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.14);border-radius:16px}
+.terms div{display:grid;grid-template-columns:150px minmax(0,1fr);gap:16px;padding:18px 22px}
+.terms div+div{border-top:1px solid rgba(255,255,255,.12)}
+.terms dt{color:#9FC3B5;font-size:15px}
+.terms dd{margin:0;color:#fff;font-size:16.5px}
+@media (max-width:560px){.terms div{grid-template-columns:1fr;gap:2px}}
+.offer .btn-primary{background:#fff;color:var(--green-deep);margin-top:28px}
+.offer .btn-primary:hover{background:#EAF2EE}
+
+/* steps */
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-top:2px solid var(--ink)}
+@media (max-width:900px){.steps{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.steps{grid-template-columns:1fr}}
+.steps li{padding:22px 24px 26px 0}
+.steps li+li{padding-left:24px;border-left:1px solid var(--line)}
+@media (max-width:900px){.steps li:nth-child(3){border-left:0;padding-left:0}}
+@media (max-width:560px){.steps li+li{border-left:0;padding-left:0;border-top:1px solid var(--line)}}
+.step-n{font-family:var(--display);font-size:15px;font-weight:600;color:var(--green);display:flex;justify-content:space-between;gap:12px}
+.step-n span{color:var(--ink-3);font-family:var(--body);font-weight:500;font-size:13.5px}
+.steps h3{margin-top:14px}
+.steps p{margin-top:8px;color:var(--ink-2);font-size:15.5px}
+
+/* sheet */
+.sheet-wrap{margin-top:clamp(40px,6vw,64px);display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:clamp(24px,4vw,56px);align-items:start}
+@media (max-width:900px){.sheet-wrap{grid-template-columns:1fr}}
+.sheet-wrap .lede{font-size:16.5px;margin-top:12px}
+.sheet{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.sheet-title{display:flex;justify-content:space-between;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line);font-size:14px;color:var(--ink-3)}
+.sheet-title strong{color:var(--ink);font-weight:600}
+.sheet-scroll{overflow-x:auto}
+.sheet table{width:100%;border-collapse:collapse;font-size:14.5px;min-width:560px}
+.sheet th{text-align:left;font-weight:500;color:var(--ink-3);font-size:13px;padding:10px 18px;background:#FAFBF9;border-bottom:1px solid var(--line)}
+.sheet td{padding:12px 18px;border-bottom:1px solid var(--line);vertical-align:top}
+.sheet tr:last-child td{border-bottom:0}
+.sheet td.num{font-variant-numeric:tabular-nums}
+.tag{display:inline-block;font-size:13px;font-weight:600;padding:3px 9px;border-radius:6px;white-space:nowrap}
+.tag-ok{background:var(--green-tint);color:var(--green-deep)}
+.tag-paid{background:#E8EAF0;color:#2F3A56}
+.tag-retry{background:var(--amber-tint);color:#7A4A06}
+.tag-staff{background:#F4E4E2;color:#7C2D22}
+
+/* rules */
+.rules{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 clamp(24px,4vw,48px)}
+@media (max-width:900px){.rules{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.rules{grid-template-columns:1fr}}
+.rules div{padding:20px 0;border-top:1px solid var(--line)}
+.rules h3{font-size:17.5px}
+.rules p{margin-top:6px;color:var(--ink-2);font-size:15.5px}
+
+/* faq */
+.faq-grid{display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:clamp(24px,5vw,72px)}
+@media (max-width:860px){.faq-grid{grid-template-columns:1fr}}
+.faq details{border-bottom:1px solid var(--line)}
+.faq details:first-child{border-top:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 0;font-weight:600;font-size:17px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"";flex:none;width:12px;height:12px;background:linear-gradient(var(--ink),var(--ink)) center/12px 1.5px no-repeat,linear-gradient(var(--ink),var(--ink)) center/1.5px 12px no-repeat;transition:transform .2s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{padding:0 0 20px;color:var(--ink-2);max-width:62ch}
+
+/* contact */
+.contact{background:var(--ink);color:#E6E7E3}
+.contact h2{color:#fff}
+.contact .lede{color:#B9BDB6}
+.contact-grid{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(32px,5vw,72px);align-items:start}
+@media (max-width:900px){.contact-grid{grid-template-columns:1fr}}
+.contact-alt{margin-top:32px;padding-top:24px;border-top:1px solid rgba(255,255,255,.14);font-size:15px;color:#B9BDB6}
+.contact-alt a{color:#fff;font-weight:500;font-size:17px}
+.form{background:var(--surface);color:var(--ink);border-radius:16px;padding:clamp(20px,3vw,32px);display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.form .full{grid-column:1 / -1}
+@media (max-width:560px){.form{grid-template-columns:1fr}}
+.field label{display:block;font-size:14.5px;font-weight:500;margin-bottom:6px}
+.field label span{color:var(--ink-3);font-weight:400}
+.field input,.field select,.field textarea{width:100%;font:inherit;font-size:16px;color:var(--ink);background:#F6F7F4;border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.field textarea{min-height:110px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{outline:2px solid var(--green);outline-offset:0;border-color:var(--green);background:#fff}
+.form-foot{display:flex;flex-wrap:wrap;align-items:center;gap:16px}
+.form-status{font-size:15px;color:var(--ink-2)}
+.form-status.ok{color:var(--green-deep);font-weight:500}
+.form-status.err{color:#9B2C1F;font-weight:500}
+.hp{position:absolute;left:-9999px}
+
+/* footer */
+.site-footer{padding:36px 0 44px;font-size:14.5px;color:var(--ink-3)}
+.site-footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
+.site-footer a{color:var(--ink-2)}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="RapidFlow Designs, back to top">
+      <svg width="26" height="26" viewBox="0 0 22 22" aria-hidden="true"><rect width="22" height="22" rx="5" fill="#1F6F5C"/><path d="M4 11H8L10 6L13 16L15 11H18" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      RapidFlow Designs
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#sample-call">Sample call</a>
+      <a href="#pilot">The pilot</a>
+      <a href="#how">How it runs</a>
+      <a href="#faq">Questions</a>
+    </nav>
+    <a class="btn btn-dark" href="#contact">Request a pilot</a>
+  </div>
+</header>
+
+<main id="top">
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="hero-kicker"><span class="dot" aria-hidden="true"></span>For NBFCs and small lenders</p>
+      <h1>EMI reminder calls, made in your borrower's language.</h1>
+      <p class="lede">An AI calling assistant that calls borrowers before the due date, answers simple questions, records who promised to pay and when, and sends your team a results sheet every day.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#contact">Request a pilot place</a>
+        <a class="btn btn-quiet" href="#sample-call" data-play-link>See a sample call</a>
+      </div>
+      <p class="hero-note">Four-week pilots for three lenders. No system integration needed to start.</p>
+    </div>
+
+    <figure class="call" id="sample-call" aria-labelledby="call-title">
+      <div class="call-top">
+        <div class="call-who">
+          <div class="avatar" aria-hidden="true">RK</div>
+          <div>
+            <strong id="call-title">Sample call: EMI due in 3 days</strong>
+            <span>Fictional borrower, fictional lender ("Demo Finance")</span>
+          </div>
+        </div>
+        <button class="play" type="button" aria-pressed="false" aria-controls="transcript">
+          <span class="ic" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M2 1l7 4-7 4z" fill="#15171C"/></svg></span>
+          <span class="lbl">Play <span class="lbl-long">the call</span></span>
+        </button>
+      </div>
+      <dl class="call-meta">
+        <div><dt>Borrower</dt><dd>Ramesh Kumar</dd></div>
+        <div><dt>EMI due</dt><dd>₹4,850 on 23 Oct</dd></div>
+        <div><dt>Called at</dt><dd>10:42 am, in Hindi</dd></div>
+      </dl>
+      <ol class="transcript" id="transcript" aria-live="polite">
+        <li class="line ai" data-t="0">
+          <div class="who">Assistant</div>
+          <div><div class="hi" lang="hi">नमस्ते, क्या मेरी बात रमेश कुमार जी से हो रही है?</div><div class="en">Hello, am I speaking with Ramesh Kumar ji?</div></div>
+        </li>
+        <li class="line" data-t="4">
+          <div class="who">Borrower</div>
+          <div><div class="hi" lang="hi">हाँ, बोलिए।</div><div class="en">Yes, go ahead.</div></div>
+        </li>
+        <li class="line ai" data-t="6">
+          <div class="who">Assistant</div>
+          <div><div class="hi" lang="hi">मैं डेमो फ़ाइनेंस की ओर से एक ऑटोमेटेड असिस्टेंट हूँ। यह कॉल रिकॉर्ड हो रही है।</div><div class="en">I'm an automated assistant calling for Demo Finance. This call is being recorded.</div></div>
+        </li>
+        <li class="line ai" data-t="12">
+          <div class="who">Assistant</div>
+          <div><div class="hi" lang="hi">आपकी ₹4,850 की EMI 23 अक्टूबर को है। क्या आप तब तक भुगतान कर पाएँगे?</div><div class="en">Your EMI of ₹4,850 is due on 23 October. Will you be able to pay by then?</div></div>
+        </li>
+        <li class="line" data-t="19">
+          <div class="who">Borrower</div>
+          <div><div class="hi" lang="hi">23 को नहीं हो पाएगा, 25 तारीख़ तक कर दूँगा।</div><div class="en">Not on the 23rd. I'll pay by the 25th.</div></div>
+        </li>
+        <li class="line ai" data-t="24">
+          <div class="who">Assistant</div>
+          <div><div class="hi" lang="hi">ठीक है, मैंने 25 अक्टूबर नोट कर लिया है। 24 तारीख़ को आपको याद दिला दिया जाएगा। धन्यवाद।</div><div class="en">Noted for 25 October. You'll get a reminder on the 24th. Thank you.</div></div>
+        </li>
+      </ol>
+      <dl class="outcome" aria-label="What your team sees after the call">
+        <div><dt>Outcome</dt><dd>Promise to pay</dd></div>
+        <div><dt>Promised date</dt><dd>25 Oct</dd></div>
+        <div><dt>Next step</dt><dd>Reminder on 24 Oct</dd></div>
+      </dl>
+      <figcaption class="call-foot">Your team sees the outcome in the daily sheet. A recording of every call is kept.</figcaption>
+      <!-- To add the recorded demo: put the file next to this page and set data-src, e.g. data-src="sample-call-hi.mp3".
+           Set each line's data-t (seconds) to when it starts in the recording. -->
+      <audio id="call-audio" preload="none" data-src=""></audio>
+    </figure>
+  </div>
+</section>
+
+<section class="section band-white" aria-labelledby="scope-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="scope-title">The routine calls go to the assistant. The judgement calls stay with your people.</h2>
+    </div>
+    <div class="split">
+      <div>
+        <h3>What the assistant handles</h3>
+        <ul class="ticks">
+          <li><strong>Reminders before the due date</strong><span>A call a few days before each EMI, at a time you choose within calling hours.</span></li>
+          <li><strong>A follow-up after a missed EMI</strong><span>One polite call the day after, asking when the borrower can pay.</span></li>
+          <li><strong>Promises to pay, written down</strong><span>Every promised date and amount goes into the daily sheet, with the recording.</span></li>
+          <li><strong>Simple questions</strong><span>Due amount, due date, how to pay. Anything else is passed to your team.</span></li>
+        </ul>
+      </div>
+      <div class="stays">
+        <h3>What stays with your team</h3>
+        <ul class="ticks">
+          <li><strong>Disputes and complaints</strong><span>The assistant notes them and flags the account for a call back from staff.</span></li>
+          <li><strong>Hardship and restructuring</strong><span>Borrowers who ask for more time or a change go straight to a person.</span></li>
+          <li><strong>Field visits and recovery</strong><span>Nothing beyond a reminder and a follow-up is automated.</span></li>
+          <li><strong>Any borrower who asks for a person</strong><span>They are put on your call-back list the same day.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section offer" id="pilot" aria-labelledby="pilot-title">
+  <div class="wrap offer-grid">
+    <div>
+      <h2 id="pilot-title">A four-week pilot, measured against how your team works today.</h2>
+      <p class="lede" style="margin-top:16px">We're opening three pilot places for lenders this quarter. Each pilot is small, run closely, and judged on your own numbers.</p>
+      <div class="places" aria-label="Three pilot places">
+        <div class="seats" aria-hidden="true"><span class="seat"></span><span class="seat"></span><span class="seat"></span></div>
+        <p>Three places open</p>
+      </div>
+      <a class="btn btn-primary" href="#contact">Request a pilot place</a>
+    </div>
+    <dl class="terms">
+      <div><dt>Scope</dt><dd>One call flow, for example reminders three days before the EMI date</dd></div>
+      <div><dt>Length</dt><dd>About four weeks</dd></div>
+      <div><dt>Accounts</dt><dd>300 to 1,000 borrowers, chosen by you</dd></div>
+      <div><dt>Comparison</dt><dd>Half the accounts get the assistant's calls, half stay with your current process</dd></div>
+      <div><dt>Fee</dt><dd>A small flat fee, agreed in writing before anything starts</dd></div>
+      <div><dt>Afterwards</dt><dd>No obligation to continue</dd></div>
+      <div><dt>In return</dt><dd>Permission to publish the results, anonymised if you prefer. You approve the write-up first.</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="section" id="how" aria-labelledby="how-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="how-title">How a pilot runs</h2>
+      <p class="lede">You don't need to connect your loan software. A spreadsheet in and a spreadsheet out is enough to start.</p>
+    </div>
+    <ol class="steps">
+      <li><div class="step-n">1 <span>Week 0</span></div><h3>Agree the call</h3><p>A 30-minute call to pick the call flow, the language and the wording. You approve the script before any borrower hears it.</p></li>
+      <li><div class="step-n">2 <span>Week 0</span></div><h3>Share a list</h3><p>An Excel sheet with name, phone number, EMI amount and due date. Nothing more is needed.</p></li>
+      <li><div class="step-n">3 <span>Weeks 1–4</span></div><h3>Calls go out</h3><p>Calls run within calling hours. You get a results sheet every evening and can listen to any call.</p></li>
+      <li><div class="step-n">4 <span>Week 4</span></div><h3>Compare the results</h3><p>A short report: how many were reached, how many promised, how many paid on time, against your current process.</p></li>
+    </ol>
+
+    <div class="sheet-wrap">
+      <div>
+        <h3>The sheet your team gets each evening</h3>
+        <p class="lede">One row per borrower called. Your staff start the next morning with the accounts that need a person.</p>
+      </div>
+      <div class="sheet">
+        <div class="sheet-title"><strong>Results, 20 Oct</strong><span>Sample data</span></div>
+        <div class="sheet-scroll">
+          <table>
+            <thead><tr><th scope="col">Borrower</th><th scope="col">EMI</th><th scope="col">Outcome</th><th scope="col">Next step</th></tr></thead>
+            <tbody>
+              <tr><td>Ramesh Kumar</td><td class="num">₹4,850</td><td><span class="tag tag-ok">Promised 25 Oct</span></td><td>Reminder on 24 Oct</td></tr>
+              <tr><td>Sunita Devi</td><td class="num">₹3,200</td><td><span class="tag tag-paid">Already paid</span></td><td>None</td></tr>
+              <tr><td>Imran Shaikh</td><td class="num">₹6,100</td><td><span class="tag tag-retry">No answer</span></td><td>Retry at 6 pm</td></tr>
+              <tr><td>Kavita Patil</td><td class="num">₹2,750</td><td><span class="tag tag-staff">Asked for staff</span></td><td>Call back from branch</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section band-white" aria-labelledby="rules-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="rules-title">Rules every call follows</h2>
+      <p class="lede">Written into the assistant from the start, and checked with you before the pilot begins.</p>
+    </div>
+    <div class="rules">
+      <div><h3>Calling hours only</h3><p>Calls go out between 8 am and 7 pm, in line with RBI guidance on contacting borrowers.</p></div>
+      <div><h3>It says it is automated</h3><p>Every call opens by naming your company and saying an automated assistant is calling.</p></div>
+      <div><h3>Every call is recorded</h3><p>Borrowers are told at the start, and you can listen to any call.</p></div>
+      <div><h3>Polite, every time</h3><p>No threats, no pressure, no talk of consequences. Difficult conversations go to your staff.</p></div>
+      <div><h3>The least data needed</h3><p>Name, phone number, amount and due date. Nothing else from your loan files.</p></div>
+      <div><h3>Your data stays yours</h3><p>Used only for your calls, and deleted at the end of the pilot if you ask.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section faq" id="faq" aria-labelledby="faq-title">
+  <div class="wrap faq-grid">
+    <div>
+      <h2 id="faq-title">Questions lenders ask first</h2>
+    </div>
+    <div>
+      <details>
+        <summary>Do we need to connect our loan management system?</summary>
+        <p>No. For the pilot, you send an Excel or CSV file with the accounts to call, and we send results back the same way. Connecting your system can come later if the pilot works.</p>
+      </details>
+      <details>
+        <summary>Which languages does it speak?</summary>
+        <p>Hindi and English, including the mix of the two most borrowers use. If your borrowers mostly speak another Indian language, tell us which one and we'll confirm before the pilot starts.</p>
+      </details>
+      <details>
+        <summary>Will borrowers mind talking to an AI?</summary>
+        <p>Some will prefer a person, and they can ask for one at any point. The pilot measures this directly: you'll see how many borrowers answered, stayed on the call and promised a date, compared with your own team's calls.</p>
+      </details>
+      <details>
+        <summary>What does the pilot cost?</summary>
+        <p>A small flat fee that covers setup and the calls for four weeks. It depends on the number of accounts and is agreed in writing before anything starts. There's no commitment after the pilot.</p>
+      </details>
+      <details>
+        <summary>Who decides what the assistant says?</summary>
+        <p>You do. We draft the script with you, you approve it, and nothing changes during the pilot without your sign-off.</p>
+      </details>
+      <details>
+        <summary>Who is RapidFlow Designs?</summary>
+        <p>A small AI implementation studio. These pilots are how we're building our first published results, so we keep the number small and run each one closely.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="section contact" id="contact" aria-labelledby="contact-title">
+  <div class="wrap contact-grid">
+    <div>
+      <h2 id="contact-title">Request a pilot place</h2>
+      <p class="lede" style="margin-top:16px">Tell us a little about your loan book. We'll reply within two working days to set up a 30-minute call.</p>
+      <p class="contact-alt">Prefer email?<br><a href="mailto:yash@rapidflowdesigns.com">yash@rapidflowdesigns.com</a></p>
+    </div>
+    <form class="form" id="pilot-form" novalidate>
+      <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
+      <div class="field"><label for="f-email">Work email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
+      <div class="field"><label for="f-company">Company</label><input id="f-company" name="company" type="text" autocomplete="organization" required></div>
+      <div class="field"><label for="f-phone">Phone <span>(optional)</span></label><input id="f-phone" name="phone" type="tel" autocomplete="tel"></div>
+      <div class="field"><label for="f-accounts">Active loan accounts</label>
+        <select id="f-accounts" name="active_accounts">
+          <option value="">Choose a range</option>
+          <option>Under 2,000</option>
+          <option>2,000 to 10,000</option>
+          <option>10,000 to 50,000</option>
+          <option>Over 50,000</option>
+        </select>
+      </div>
+      <div class="field"><label for="f-lang">Main borrower language</label><input id="f-lang" name="language" type="text" placeholder="For example: Hindi, Marathi"></div>
+      <div class="field full"><label for="f-msg">Anything we should know? <span>(optional)</span></label><textarea id="f-msg" name="message" placeholder="For example: we make about 300 reminder calls a day from two branches"></textarea></div>
+      <div class="form-foot full">
+        <button class="btn btn-primary" type="submit">Send request</button>
+        <p class="form-status" id="form-status" role="status"></p>
+      </div>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span>© 2026 RapidFlow Designs. We also build other AI automations; <a href="mailto:yash@rapidflowdesigns.com">write to us</a>.</span>
+    <a href="mailto:yash@rapidflowdesigns.com">yash@rapidflowdesigns.com</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  /* ---------- sample call ---------- */
+  var card = document.getElementById('sample-call');
+  var list = document.getElementById('transcript');
+  var lines = Array.prototype.slice.call(list.querySelectorAll('.line'));
+  var btn = card.querySelector('.play');
+  var lbl = btn.querySelector('.lbl');
+  var audio = document.getElementById('call-audio');
+  var src = audio.getAttribute('data-src');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var timers = [];
+  var playing = false;
+  var pauseIcon = '<svg viewBox="0 0 10 10"><rect x="2" y="1.5" width="2" height="7" fill="#15171C"/><rect x="6" y="1.5" width="2" height="7" fill="#15171C"/></svg>';
+  var playIcon = btn.querySelector('.ic').innerHTML;
+
+  function setButton(state) {
+    btn.setAttribute('aria-pressed', state === 'playing' ? 'true' : 'false');
+    btn.querySelector('.ic').innerHTML = state === 'playing' ? pauseIcon : playIcon;
+    lbl.innerHTML = state === 'playing' ? 'Stop' : (state === 'done' ? (src ? 'Play again' : 'Replay') : (src ? 'Play <span class="lbl-long">the call</span>' : 'Step through <span class="lbl-long">the call</span>'));
+  }
+  function show(i) {
+    lines.forEach(function (l, j) { l.classList.toggle('shown', j <= i); l.classList.toggle('current', j === i); });
+  }
+  function reset() {
+    timers.forEach(clearTimeout); timers = [];
+    list.classList.remove('is-playing'); card.classList.remove('is-playing');
+    lines.forEach(function (l) { l.classList.remove('shown', 'current'); });
+  }
+  function finish() {
+    playing = false;
+    list.classList.remove('is-playing'); card.classList.remove('is-playing'); card.classList.add('is-done');
+    lines.forEach(function (l) { l.classList.add('shown'); l.classList.remove('current'); });
+    setButton('done');
+  }
+  function start() {
+    reset(); card.classList.remove('is-done');
+    playing = true; setButton('playing');
+    if (reduce && !src) { finish(); return; }
+    list.classList.add('is-playing'); card.classList.add('is-playing');
+    if (src) {
+      if (!audio.src) audio.src = src;
+      audio.currentTime = 0; audio.play();
+      return;
+    }
+    /* No recording yet: step through the transcript on its own. */
+    var t = 0;
+    lines.forEach(function (l, i) {
+      timers.push(setTimeout(function () { show(i); }, t));
+      t += 900 + l.querySelector('.en').textContent.length * 38;
+    });
+    timers.push(setTimeout(finish, t));
+  }
+  function stop() {
+    if (src) audio.pause();
+    reset(); playing = false; card.classList.remove('is-done'); setButton('idle');
+  }
+  if (src) {
+    audio.addEventListener('timeupdate', function () {
+      var idx = -1;
+      lines.forEach(function (l, i) { if (audio.currentTime >= parseFloat(l.getAttribute('data-t') || 0)) idx = i; });
+      if (idx >= 0) show(idx);
+    });
+    audio.addEventListener('ended', finish);
+  }
+  setButton('idle');
+  btn.addEventListener('click', function () { playing ? stop() : start(); });
+  document.querySelectorAll('[data-play-link]').forEach(function (a) {
+    a.addEventListener('click', function () { if (!playing) setTimeout(start, reduce ? 0 : 450); });
+  });
+
+  /* ---------- pilot request form (Web3Forms, same key as the previous site) ---------- */
+  var form = document.getElementById('pilot-form');
+  var status = document.getElementById('form-status');
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    var missing = ['f-name', 'f-email', 'f-company'].filter(function (id) { return !document.getElementById(id).value.trim(); });
+    var email = document.getElementById('f-email');
+    if (missing.length) { status.className = 'form-status err'; status.textContent = 'Add your name, work email and company to send the request.'; document.getElementById(missing[0]).focus(); return; }
+    if (!email.checkValidity()) { status.className = 'form-status err'; status.textContent = 'Check the email address; it looks incomplete.'; email.focus(); return; }
+    var submit = form.querySelector('button[type=submit]');
+    submit.disabled = true; status.className = 'form-status'; status.textContent = 'Sending…';
+    var data = new FormData(form);
+    data.append('access_key', 'e5803a90-ff27-4eb2-8989-cd73c292fb0b');
+    data.append('subject', 'Pilot request: ' + (data.get('company') || data.get('name')));
+    data.append('from_name', 'RapidFlow Designs website');
+    try {
+      var res = await fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { Accept: 'application/json' }, body: data });
+      var json = await res.json();
+      if (json.success) { form.reset(); status.className = 'form-status ok'; status.textContent = 'Request sent. We will reply within two working days.'; }
+      else { throw new Error(); }
+    } catch (err) {
+      status.className = 'form-status err';
+      status.textContent = 'The request didn’t send. Email yash@rapidflowdesigns.com instead.';
+    }
+    submit.disabled = false;
+  });
+})();
+</script>
+</body>
+</html>
