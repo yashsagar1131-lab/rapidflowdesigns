@@ -100,16 +100,10 @@ p{margin:0}
 .play{flex:none;display:inline-flex;align-items:center;gap:9px;background:var(--ink);color:#fff;border:0;border-radius:999px;padding:9px 15px 9px 10px;font:600 14px/1 var(--body);cursor:pointer}
 .play .ic{width:22px;height:22px;border-radius:50%;background:var(--amber);display:grid;place-items:center}
 .play .ic svg{width:10px;height:10px}
-.modes{display:flex;gap:4px;margin:12px 18px 0;padding:4px;background:var(--bg);border-radius:999px}
-.mode{flex:1;border:0;background:transparent;color:var(--ink-2);font:600 14px/1 var(--body);padding:9px 12px;border-radius:999px;cursor:pointer}
-.mode[aria-selected=true]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(21,23,28,.14)}
-.call[data-mode=live] .play,.call[data-mode=live] .transcript,.call[data-mode=live] .sample-only{display:none}
-.call[data-mode=sample] .live{display:none}
 @media (max-height:700px) and (min-width:961px){
-  .call-top{padding:9px 18px}.modes{margin-top:8px}.mode{padding:7px 12px}
-  .transcript{padding-top:10px;gap:7px}.outcome{margin:6px 18px 14px}.live{padding-top:12px;gap:8px}
+  .call-top{padding:9px 18px}.live{padding-top:12px;padding-bottom:14px;gap:9px}
 }
-.live{padding:16px 18px 4px;display:flex;flex-direction:column;gap:12px}
+.live{padding:18px 18px 20px;display:flex;flex-direction:column;gap:14px}
 .live-status{display:flex;align-items:center;gap:10px;font-weight:600;font-size:15px}
 .live-status .pulse{width:9px;height:9px;border-radius:50%;background:var(--ink-3)}
 .live[data-state=connecting] .pulse,.live[data-state=ringing] .pulse{background:var(--amber)}
@@ -290,7 +284,7 @@ p{margin:0}
       <p class="lede">An AI calling assistant that makes the routine reminder calls and sends your team a daily results sheet.</p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="#contact" data-open-pilot>Request a pilot place</a>
-        <a class="btn btn-quiet" href="#sample-call" data-live-link>Talk to the assistant</a>
+        <a class="btn btn-quiet" href="#sample-call" data-live-link>Try the live demo</a>
       </div>
       <dl class="pilot-strip" aria-label="The pilot">
         <div><dt>Pilot</dt><dd>4 weeks</dd></div>
@@ -301,25 +295,17 @@ p{margin:0}
       <p class="hero-note">Measured against your current process. No obligation to continue.</p>
     </div>
 
-    <figure class="call" id="sample-call" data-mode="sample" aria-labelledby="call-title">
+    <figure class="call" id="sample-call" data-mode="live" aria-labelledby="call-title">
       <div class="call-top">
         <div class="call-who">
           <div class="avatar" aria-hidden="true">RK</div>
           <div>
-            <strong id="call-title">Sample call: EMI due in 3 days</strong>
-            <span id="call-sub">In Hindi. Fictional borrower and lender.</span>
+            <strong id="call-title">Try the assistant yourself</strong>
+            <span>You play the borrower. In Hindi or English. Fictional lender.</span>
           </div>
         </div>
-        <button class="play" type="button" aria-pressed="false" aria-controls="transcript">
-          <span class="ic" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M2 1l7 4-7 4z" fill="#15171C"/></svg></span>
-          <span class="lbl">Play</span>
-        </button>
       </div>
-      <div class="modes" role="tablist" aria-label="Demo mode">
-        <button class="mode" type="button" role="tab" id="tab-sample" aria-selected="true" data-mode="sample">Listen to a call</button>
-        <button class="mode" type="button" role="tab" id="tab-live" aria-selected="false" data-mode="live">Talk to it live</button>
-      </div>
-      <div class="live" id="live" data-state="idle" role="tabpanel" aria-labelledby="tab-live">
+      <div class="live" id="live" data-state="idle">
         <div class="live-status"><span class="pulse" aria-hidden="true"></span><span id="live-msg" aria-live="polite">Ready when you are</span></div>
         <div class="meter" id="meter" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
         <div>
@@ -338,32 +324,6 @@ p{margin:0}
         </div>
         <p class="live-note">Uses your microphone; headphones work best. Calls are recorded and last up to 3 minutes. Please don’t share personal or financial details.</p>
       </div>
-      <ol class="transcript" id="transcript" aria-live="polite">
-        <li class="line ai" data-t="0">
-          <div class="who">Assistant</div>
-          <div><span class="hi" lang="hi">नमस्ते रमेश जी, यह डेमो फ़ाइनेंस की ऑटोमेटेड कॉल है। कॉल रिकॉर्ड हो रही है।</span><span class="en">Hello Ramesh ji, this is an automated call from Demo Finance. It is being recorded.</span></div>
-        </li>
-        <li class="line ai" data-t="6">
-          <div class="who">Assistant</div>
-          <div><span class="hi" lang="hi">आपकी ₹4,850 की EMI 23 अक्टूबर को है। क्या आप तब तक भुगतान कर पाएँगे?</span><span class="en">Your EMI of ₹4,850 is due on 23 October. Will you be able to pay by then?</span></div>
-        </li>
-        <li class="line" data-t="13">
-          <div class="who">Borrower</div>
-          <div><span class="hi" lang="hi">23 को नहीं, 25 तारीख़ तक कर दूँगा।</span><span class="en">Not on the 23rd. I'll pay by the 25th.</span></div>
-        </li>
-        <li class="line ai" data-t="19">
-          <div class="who">Assistant</div>
-          <div><span class="hi" lang="hi">ठीक है, 25 अक्टूबर नोट कर ली है। धन्यवाद।</span><span class="en">Noted, 25 October. Thank you.</span></div>
-        </li>
-      </ol>
-      <dl class="outcome sample-only" aria-label="What your team sees after the call">
-        <div><dt>Outcome</dt><dd>Promise to pay</dd></div>
-        <div><dt>Promised date</dt><dd>25 Oct</dd></div>
-        <div><dt>Next step</dt><dd>Reminder 24 Oct</dd></div>
-      </dl>
-      <!-- To add the recorded demo: put the file next to this page and set data-src, e.g. data-src="sample-call-hi.mp3".
-           Set each line's data-t (seconds) to when it starts in the recording. -->
-      <audio id="call-audio" preload="none" data-src=""></audio>
     </figure>
   </div>
 </section>
@@ -547,73 +507,7 @@ p{margin:0}
     dlg.addEventListener('close', function () { root.classList.remove('modal-open'); });
   }
 
-  /* ---------- sample call ---------- */
   var card = document.getElementById('sample-call');
-  var list = document.getElementById('transcript');
-  var lines = Array.prototype.slice.call(list.querySelectorAll('.line'));
-  var btn = card.querySelector('.play');
-  var lbl = btn.querySelector('.lbl');
-  var audio = document.getElementById('call-audio');
-  var src = audio.getAttribute('data-src');
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var timers = [];
-  var playing = false;
-  var pauseIcon = '<svg viewBox="0 0 10 10"><rect x="2" y="1.5" width="2" height="7" fill="#15171C"/><rect x="6" y="1.5" width="2" height="7" fill="#15171C"/></svg>';
-  var playIcon = btn.querySelector('.ic').innerHTML;
-
-  function setButton(state) {
-    btn.setAttribute('aria-pressed', state === 'playing' ? 'true' : 'false');
-    btn.querySelector('.ic').innerHTML = state === 'playing' ? pauseIcon : playIcon;
-    if (state === 'playing') lbl.textContent = 'Stop';
-    else if (state === 'done') lbl.textContent = src ? 'Play again' : 'Replay';
-    else lbl.innerHTML = src ? 'Play <span class="lbl-long">the call</span>' : 'Play';
-  }
-  function show(i) {
-    lines.forEach(function (l, j) { l.classList.toggle('shown', j <= i); l.classList.toggle('current', j === i); });
-  }
-  function reset() {
-    timers.forEach(clearTimeout); timers = [];
-    list.classList.remove('is-playing'); card.classList.remove('is-playing');
-    lines.forEach(function (l) { l.classList.remove('shown', 'current'); });
-  }
-  function finish() {
-    playing = false;
-    list.classList.remove('is-playing'); card.classList.remove('is-playing'); card.classList.add('is-done');
-    lines.forEach(function (l) { l.classList.add('shown'); l.classList.remove('current'); });
-    setButton('done');
-  }
-  function start() {
-    reset(); card.classList.remove('is-done');
-    playing = true; setButton('playing');
-    if (reduce && !src) { finish(); return; }
-    list.classList.add('is-playing'); card.classList.add('is-playing');
-    if (src) {
-      if (!audio.src) audio.src = src;
-      audio.currentTime = 0; audio.play();
-      return;
-    }
-    /* No recording yet: step through the transcript on its own. */
-    var t = 0;
-    lines.forEach(function (l, i) {
-      timers.push(setTimeout(function () { show(i); }, t));
-      t += 900 + l.querySelector('.en').textContent.length * 38;
-    });
-    timers.push(setTimeout(finish, t));
-  }
-  function stop() {
-    if (src) audio.pause();
-    reset(); playing = false; card.classList.remove('is-done'); setButton('idle');
-  }
-  if (src) {
-    audio.addEventListener('timeupdate', function () {
-      var idx = -1;
-      lines.forEach(function (l, i) { if (audio.currentTime >= parseFloat(l.getAttribute('data-t') || 0)) idx = i; });
-      if (idx >= 0) show(idx);
-    });
-    audio.addEventListener('ended', finish);
-  }
-  setButton('idle');
-  btn.addEventListener('click', function () { playing ? stop() : start(); });
 
   /* ---------- live call (Bolna Web Call SDK, loaded only when needed) ---------- */
   var SDK_URL = '/vendor/bolna-web-call-3.0.1.min.js';
@@ -625,9 +519,6 @@ p{margin:0}
   var endBtn = document.getElementById('live-end');
   var muteBtn = document.getElementById('live-mute');
   var bars = Array.prototype.slice.call(document.querySelectorAll('#meter i'));
-  var title = document.getElementById('call-title');
-  var sub = document.getElementById('call-sub');
-  var sampleTitle = title.textContent, sampleSub = sub.textContent;
   var liveCall = null, liveTimer = null, sdkPromise = null;
 
   function loadSdk() {
@@ -656,7 +547,7 @@ p{margin:0}
     if (code === 'microphone_denied') return 'Microphone is blocked. Allow it in your browser’s address bar, then try again.';
     if (code === 'at_capacity') return 'All lines are busy. Please try again in a minute.';
     if (code === 'autoplay_blocked') return 'Your browser blocked the audio. Click Start again.';
-    return 'The live demo is not available right now. Listen to the sample call instead.';
+    return 'The live demo is not available right now. Please email yash@rapidflowdesigns.com and we will set up a call.';
   }
   function endLive(message) {
     clearTimeout(liveTimer);
@@ -698,26 +589,8 @@ p{margin:0}
     muteBtn.setAttribute('aria-pressed', m ? 'true' : 'false'); muteBtn.textContent = m ? 'Unmute' : 'Mute';
   });
 
-  var tabs = Array.prototype.slice.call(document.querySelectorAll('.mode'));
-  function setMode(mode) {
-    var h = card.getAttribute('data-mode') === 'sample' ? list.offsetHeight : 0;
-    if (mode === 'live') {
-      if (playing) stop();
-      if (h) live.style.minHeight = h + 'px';
-      title.textContent = 'Live demo: you play the borrower';
-      sub.textContent = 'In Hindi or English. Fictional lender.';
-      loadSdk().catch(function () {});
-    } else {
-      if (liveCall) endLive(false);
-      setLive('idle', 'Ready when you are');
-      title.textContent = sampleTitle; sub.textContent = sampleSub;
-    }
-    card.setAttribute('data-mode', mode);
-    tabs.forEach(function (t) { t.setAttribute('aria-selected', t.getAttribute('data-mode') === mode ? 'true' : 'false'); });
-  }
-  tabs.forEach(function (t) { t.addEventListener('click', function () { setMode(t.getAttribute('data-mode')); }); });
   document.querySelectorAll('[data-live-link]').forEach(function (a) {
-    a.addEventListener('click', function () { setMode('live'); });
+    a.addEventListener('click', function () { loadSdk().catch(function () {}); });
   });
   window.addEventListener('pagehide', function () { if (liveCall) endLive(false); });
 
