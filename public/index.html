@@ -1,0 +1,596 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RapidFlow Designs | AI calling assistant for EMI reminders</title>
+<meta name="description" content="An AI calling assistant for NBFCs and small lenders. It makes EMI reminder calls in the borrower's language and sends your team a daily results sheet. Four-week pilots, three places.">
+<meta property="og:title" content="EMI reminder calls in your borrower's language">
+<meta property="og:description" content="An AI calling assistant for NBFCs and small lenders. Four-week pilots for three lenders.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://rapidflowdesigns.com/">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'%3E%3Crect width='22' height='22' rx='5' fill='%231F6F5C'/%3E%3Cpath d='M4 11H8L10 6L13 16L15 11H18' stroke='%23fff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Instrument+Sans:wght@400;500;600&family=Mukta:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3F4F1;
+  --surface:#FFFFFF;
+  --ink:#15171C;
+  --ink-2:#4A4F57;
+  --ink-3:#6E737B;
+  --line:#D9DCD6;
+  --green:#1F6F5C;
+  --green-deep:#164F42;
+  --green-tint:#E3EEE9;
+  --amber:#F2A93B;
+  --amber-tint:#FBEFD9;
+  --display:"Bricolage Grotesque", "Instrument Sans", system-ui, sans-serif;
+  --body:"Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --deva:"Mukta", "Nirmala UI", "Noto Sans Devanagari", sans-serif;
+  --wrap:1180px;
+  --gutter:clamp(16px, 4vw, 40px);
+  --header-h:64px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scroll-padding-top:var(--header-h)}
+html.modal-open{overflow:hidden}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+img,svg{display:block}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--green);outline-offset:3px;border-radius:4px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 var(--gutter)}
+h1,h2,h3{font-family:var(--display);font-weight:600;letter-spacing:-0.02em;margin:0;color:var(--ink)}
+h2{font-size:clamp(28px,3.6vw,40px);line-height:1.1}
+h3{font-size:18px;line-height:1.3;letter-spacing:-0.01em}
+p{margin:0}
+.lede{color:var(--ink-2);font-size:18px;max-width:52ch}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font:600 16px/1 var(--body);padding:15px 22px;border-radius:10px;text-decoration:none;border:1px solid transparent;cursor:pointer;transition:background-color .15s}
+.btn-primary{background:var(--green);color:#fff}
+.btn-primary:hover{background:var(--green-deep)}
+.btn-quiet{background:var(--surface);color:var(--ink);border-color:var(--line)}
+.btn-quiet:hover{border-color:var(--ink-3)}
+.btn-dark{background:var(--ink);color:var(--bg);padding:10px 16px;font-size:15px}
+.btn[disabled]{opacity:.6;cursor:default}
+
+/* header */
+.site-header{position:sticky;top:0;z-index:20;background:rgba(243,244,241,.94);backdrop-filter:saturate(1.2) blur(8px);border-bottom:1px solid var(--line)}
+.site-header .wrap{display:flex;align-items:center;justify-content:space-between;height:var(--header-h);gap:24px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:600;font-size:17px}
+.nav{display:flex;gap:28px}
+.nav a{text-decoration:none;color:var(--ink-2);font-size:15px}
+.nav a:hover{color:var(--ink)}
+@media (max-width:760px){.nav{display:none}}
+
+/* hero: one screen on a laptop, with the buttons in view */
+.hero{min-height:calc(100vh - var(--header-h));min-height:calc(100svh - var(--header-h));display:flex;align-items:center;padding:clamp(20px,3.5vh,48px) 0}
+.hero-grid{width:100%;display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);gap:clamp(28px,4.5vw,64px);align-items:center}
+@media (max-width:960px){.hero{min-height:0;padding:36px 0 56px}.hero-grid{grid-template-columns:1fr}}
+.hero-kicker{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:500;color:var(--green-deep);background:var(--green-tint);padding:5px 12px;border-radius:999px;margin-bottom:clamp(12px,2.2vh,20px)}
+.hero-kicker .dot{width:7px;height:7px;border-radius:50%;background:var(--green)}
+.hero h1{font-size:clamp(34px,min(4.7vw,7.4vh),60px);line-height:1.04;letter-spacing:-0.035em;max-width:15ch}
+.hero .lede{margin-top:clamp(12px,2vh,18px);font-size:clamp(16px,2.4vh,18px);max-width:46ch}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:clamp(16px,3vh,28px)}
+@media (max-height:700px) and (min-width:961px){.hero-actions .btn{padding:13px 20px}}
+
+.pilot-strip{margin:clamp(16px,3vh,28px) 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,auto));justify-content:start;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.pilot-strip div{padding:12px 22px 12px 0;margin-right:22px;border-right:1px solid var(--line)}
+.pilot-strip div:last-child{border-right:0;margin-right:0;padding-right:0}
+.pilot-strip dt{font-size:12.5px;color:var(--ink-3);line-height:1.2}
+.pilot-strip dd{margin:3px 0 0;font:600 17px/1.2 var(--display);letter-spacing:-0.01em;color:var(--ink)}
+.hero-note{margin-top:10px;color:var(--ink-3);font-size:14px}
+@media (max-width:560px){
+  .pilot-strip{grid-template-columns:1fr 1fr}
+  .pilot-strip div{margin:0;padding:12px 0;border-right:0}
+  .pilot-strip div:nth-child(n+3){border-top:1px solid var(--line)}
+}
+
+/* sample call */
+.call{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:0 1px 0 rgba(21,23,28,.04),0 24px 48px -28px rgba(21,23,28,.28);overflow:hidden}
+.call-top{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 18px;border-bottom:1px solid var(--line)}
+.call-who{display:flex;align-items:center;gap:12px;min-width:0}
+.avatar{flex:none;width:38px;height:38px;border-radius:50%;background:var(--green-tint);color:var(--green-deep);display:grid;place-items:center;font-weight:600;font-size:14px}
+.call-who strong{display:block;font-size:15.5px;line-height:1.25}
+.call-who span{display:block;font-size:13px;color:var(--ink-3);line-height:1.3}
+.play{flex:none;display:inline-flex;align-items:center;gap:9px;background:var(--ink);color:#fff;border:0;border-radius:999px;padding:9px 15px 9px 10px;font:600 14px/1 var(--body);cursor:pointer}
+.play .ic{width:22px;height:22px;border-radius:50%;background:var(--amber);display:grid;place-items:center}
+.play .ic svg{width:10px;height:10px}
+.transcript{list-style:none;margin:0;padding:16px 18px 4px;display:flex;flex-direction:column;gap:10px}
+.line{display:grid;grid-template-columns:62px minmax(0,1fr);gap:10px;align-items:baseline;transition:opacity .35s ease}
+.line .who{font-size:12.5px;font-weight:600;color:var(--ink-3);padding-top:2px}
+.line.ai .who{color:var(--green)}
+.line .hi{display:inline;font-family:var(--deva);font-size:16.5px;line-height:1.4;color:var(--ink)}
+.line.ai .hi{color:var(--green-deep)}
+.line .en{display:block;font-size:13px;line-height:1.4;color:var(--ink-3);margin-top:1px}
+.transcript.is-playing .line{opacity:.18}
+.transcript.is-playing .line.shown{opacity:1}
+.line.current .hi{background:linear-gradient(transparent 62%, var(--amber-tint) 62%)}
+.outcome{margin:8px 18px 18px;border-radius:12px;background:var(--green-tint);padding:11px 14px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;transition:opacity .35s ease}
+.call.is-playing .outcome{opacity:.18}
+.call.is-done .outcome{opacity:1}
+.outcome dt{font-size:12px;color:var(--green-deep);opacity:.8}
+.outcome dd{margin:1px 0 0;font-weight:600;font-size:14.5px;color:var(--green-deep)}
+@media (max-width:560px){
+  .avatar{display:none}
+  .call-top{flex-wrap:wrap}
+  .call-who{flex:1 1 100%}
+  .line{grid-template-columns:1fr;gap:2px}
+  .outcome{grid-template-columns:1fr 1fr}
+  .outcome div:nth-child(3){grid-column:1 / -1}
+  .play .lbl-long{display:none}
+}
+
+/* sections */
+.section{padding:clamp(52px,7vw,88px) 0}
+.section-head{max-width:620px;margin-bottom:clamp(24px,4vw,40px)}
+.section-head .lede{margin-top:12px}
+.band-white{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+
+/* scope */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,56px)}
+@media (max-width:700px){.split{grid-template-columns:1fr}}
+.split h3{padding-bottom:12px;border-bottom:2px solid var(--ink)}
+.split .stays h3{border-bottom-color:var(--line)}
+.plain{list-style:none;margin:0;padding:0}
+.plain li{padding:12px 0;border-bottom:1px solid var(--line);font-size:16.5px}
+
+/* how it runs */
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:2px solid var(--ink)}
+@media (max-width:900px){.steps{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.steps{grid-template-columns:1fr}}
+.steps li{padding:18px 20px 22px 0}
+.steps li+li{padding-left:20px;border-left:1px solid var(--line)}
+@media (max-width:900px){.steps li:nth-child(3){border-left:0;padding-left:0}}
+@media (max-width:520px){.steps li+li{border-left:0;padding-left:0;border-top:1px solid var(--line)}}
+.step-n{font:600 14px/1 var(--display);color:var(--green);display:flex;justify-content:space-between;gap:12px}
+.step-n span{color:var(--ink-3);font:500 13px/1 var(--body)}
+.steps h3{margin-top:12px}
+.steps p{margin-top:6px;color:var(--ink-2);font-size:15.5px}
+
+.sheet-wrap{margin-top:clamp(32px,5vw,48px);display:grid;grid-template-columns:minmax(0,.6fr) minmax(0,1.4fr);gap:clamp(20px,4vw,48px);align-items:center}
+@media (max-width:900px){.sheet-wrap{grid-template-columns:1fr}}
+.sheet-wrap p{margin-top:8px;color:var(--ink-2);font-size:16px}
+.sheet{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.sheet-title{display:flex;justify-content:space-between;gap:12px;padding:12px 18px;border-bottom:1px solid var(--line);font-size:13.5px;color:var(--ink-3)}
+.sheet-title strong{color:var(--ink);font-weight:600}
+.sheet-scroll{overflow-x:auto}
+.sheet table{width:100%;border-collapse:collapse;font-size:14.5px;min-width:520px}
+.sheet th{text-align:left;font-weight:500;color:var(--ink-3);font-size:13px;padding:9px 18px;background:#FAFBF9;border-bottom:1px solid var(--line)}
+.sheet td{padding:11px 18px;border-bottom:1px solid var(--line);vertical-align:top}
+.sheet tr:last-child td{border-bottom:0}
+.sheet td.num{font-variant-numeric:tabular-nums}
+.tag{display:inline-block;font-size:13px;font-weight:600;padding:3px 9px;border-radius:6px;white-space:nowrap}
+.tag-ok{background:var(--green-tint);color:var(--green-deep)}
+.tag-paid{background:#E8EAF0;color:#2F3A56}
+.tag-retry{background:var(--amber-tint);color:#7A4A06}
+.tag-staff{background:#F4E4E2;color:#7C2D22}
+
+/* terms + rules */
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,5vw,72px);align-items:start}
+@media (max-width:820px){.two{grid-template-columns:1fr}}
+.terms{margin:0}
+.terms div{display:grid;grid-template-columns:120px minmax(0,1fr);gap:14px;padding:13px 0;border-bottom:1px solid var(--line)}
+.terms div:first-child{border-top:2px solid var(--ink)}
+.terms dt{color:var(--ink-3);font-size:15px}
+.terms dd{margin:0;font-size:16.5px}
+@media (max-width:480px){.terms div{grid-template-columns:1fr;gap:2px}}
+.rules{list-style:none;margin:0;padding:0}
+.rules li{padding:13px 0;border-bottom:1px solid var(--line);font-size:16.5px}
+.rules li:first-child{border-top:2px solid var(--ink)}
+.rules strong{font-weight:600}
+
+/* faq */
+.faq-grid{display:grid;grid-template-columns:minmax(0,.6fr) minmax(0,1.4fr);gap:clamp(24px,5vw,72px)}
+@media (max-width:820px){.faq-grid{grid-template-columns:1fr}}
+.faq details{border-bottom:1px solid var(--line)}
+.faq details:first-child{border-top:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px 0;font-weight:600;font-size:17px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"";flex:none;width:12px;height:12px;background:linear-gradient(var(--ink),var(--ink)) center/12px 1.5px no-repeat,linear-gradient(var(--ink),var(--ink)) center/1.5px 12px no-repeat;transition:transform .2s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{padding:0 0 18px;color:var(--ink-2);max-width:60ch}
+
+/* closing call to action */
+.closing{background:var(--green-deep);color:#EAF2EE}
+.closing .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px 40px}
+.closing h2{color:#fff;max-width:20ch}
+.closing p{margin-top:8px;color:#C9DDD5;font-size:16px}
+.closing p a{color:#fff}
+.closing .btn-primary{background:#fff;color:var(--green-deep)}
+.closing .btn-primary:hover{background:#EAF2EE}
+
+/* request dialog */
+.dlg{border:0;padding:0;border-radius:18px;width:min(500px,calc(100vw - 32px));max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px);background:var(--surface);color:var(--ink);box-shadow:0 30px 80px -20px rgba(21,23,28,.5)}
+.dlg::backdrop{background:rgba(21,23,28,.55)}
+.dlg-inner{padding:clamp(20px,4vw,30px)}
+.dlg-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.dlg-head h2{font-size:26px}
+.dlg-head p{margin-top:6px;color:var(--ink-2);font-size:15.5px}
+.dlg-x{flex:none;width:36px;height:36px;margin:-6px -8px 0 0;border:0;border-radius:50%;background:transparent;color:var(--ink-2);cursor:pointer;display:grid;place-items:center}
+.dlg-x:hover{background:var(--bg)}
+.form{margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form .full{grid-column:1 / -1}
+@media (max-width:480px){.form{grid-template-columns:1fr}}
+.field label{display:block;font-size:14.5px;font-weight:500;margin-bottom:5px}
+.field label span{color:var(--ink-3);font-weight:400}
+.field input{width:100%;font:inherit;font-size:16px;color:var(--ink);background:#F6F7F4;border:1px solid var(--line);border-radius:10px;padding:11px 13px}
+.field input:focus{outline:2px solid var(--green);outline-offset:0;border-color:var(--green);background:#fff}
+.form-foot{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:4px}
+.form-status{font-size:15px;color:var(--ink-2)}
+.form-status.ok{color:var(--green-deep);font-weight:500}
+.form-status.err{color:#9B2C1F;font-weight:500}
+.hp{position:absolute;left:-9999px}
+
+/* footer */
+.site-footer{padding:28px 0 36px;font-size:14.5px;color:var(--ink-3)}
+.site-footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+.site-footer a{color:var(--ink-2)}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="RapidFlow Designs, back to top">
+      <svg width="26" height="26" viewBox="0 0 22 22" aria-hidden="true"><rect width="22" height="22" rx="5" fill="#1F6F5C"/><path d="M4 11H8L10 6L13 16L15 11H18" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      RapidFlow Designs
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#sample-call">Sample call</a>
+      <a href="#how">How it runs</a>
+      <a href="#faq">Questions</a>
+    </nav>
+    <a class="btn btn-dark" href="#contact" data-open-pilot>Request a pilot</a>
+  </div>
+</header>
+
+<main id="top">
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="hero-kicker"><span class="dot" aria-hidden="true"></span>For NBFCs and small lenders</p>
+      <h1>EMI reminder calls, made in your borrower's language.</h1>
+      <p class="lede">An AI calling assistant that makes the routine reminder calls and sends your team a daily results sheet.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#contact" data-open-pilot>Request a pilot place</a>
+        <a class="btn btn-quiet" href="#sample-call" data-play-link>Play the sample call</a>
+      </div>
+      <dl class="pilot-strip" aria-label="The pilot">
+        <div><dt>Pilot</dt><dd>4 weeks</dd></div>
+        <div><dt>Scope</dt><dd>1 call flow</dd></div>
+        <div><dt>Fee</dt><dd>Small, flat</dd></div>
+        <div><dt>Places</dt><dd>3 open</dd></div>
+      </dl>
+      <p class="hero-note">Measured against your current process. No obligation to continue.</p>
+    </div>
+
+    <figure class="call" id="sample-call" aria-labelledby="call-title">
+      <div class="call-top">
+        <div class="call-who">
+          <div class="avatar" aria-hidden="true">RK</div>
+          <div>
+            <strong id="call-title">Sample call: EMI due in 3 days</strong>
+            <span>In Hindi. Fictional borrower and lender.</span>
+          </div>
+        </div>
+        <button class="play" type="button" aria-pressed="false" aria-controls="transcript">
+          <span class="ic" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M2 1l7 4-7 4z" fill="#15171C"/></svg></span>
+          <span class="lbl">Play</span>
+        </button>
+      </div>
+      <ol class="transcript" id="transcript" aria-live="polite">
+        <li class="line ai" data-t="0">
+          <div class="who">Assistant</div>
+          <div><span class="hi" lang="hi">नमस्ते रमेश जी, यह डेमो फ़ाइनेंस की ऑटोमेटेड कॉल है। कॉल रिकॉर्ड हो रही है।</span><span class="en">Hello Ramesh ji, this is an automated call from Demo Finance. It is being recorded.</span></div>
+        </li>
+        <li class="line ai" data-t="6">
+          <div class="who">Assistant</div>
+          <div><span class="hi" lang="hi">आपकी ₹4,850 की EMI 23 अक्टूबर को है। क्या आप तब तक भुगतान कर पाएँगे?</span><span class="en">Your EMI of ₹4,850 is due on 23 October. Will you be able to pay by then?</span></div>
+        </li>
+        <li class="line" data-t="13">
+          <div class="who">Borrower</div>
+          <div><span class="hi" lang="hi">23 को नहीं, 25 तारीख़ तक कर दूँगा।</span><span class="en">Not on the 23rd. I'll pay by the 25th.</span></div>
+        </li>
+        <li class="line ai" data-t="19">
+          <div class="who">Assistant</div>
+          <div><span class="hi" lang="hi">ठीक है, 25 अक्टूबर नोट कर ली है। धन्यवाद।</span><span class="en">Noted, 25 October. Thank you.</span></div>
+        </li>
+      </ol>
+      <dl class="outcome" aria-label="What your team sees after the call">
+        <div><dt>Outcome</dt><dd>Promise to pay</dd></div>
+        <div><dt>Promised date</dt><dd>25 Oct</dd></div>
+        <div><dt>Next step</dt><dd>Reminder 24 Oct</dd></div>
+      </dl>
+      <!-- To add the recorded demo: put the file next to this page and set data-src, e.g. data-src="sample-call-hi.mp3".
+           Set each line's data-t (seconds) to when it starts in the recording. -->
+      <audio id="call-audio" preload="none" data-src=""></audio>
+    </figure>
+  </div>
+</section>
+
+<section class="section band-white" aria-labelledby="scope-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="scope-title">Routine calls to the assistant. Judgement calls to your team.</h2>
+    </div>
+    <div class="split">
+      <div>
+        <h3>The assistant handles</h3>
+        <ul class="plain">
+          <li>Reminders before the due date</li>
+          <li>One follow-up after a missed EMI</li>
+          <li>Promised dates, written into the daily sheet</li>
+          <li>Simple questions: amount, date, how to pay</li>
+        </ul>
+      </div>
+      <div class="stays">
+        <h3>Your team keeps</h3>
+        <ul class="plain">
+          <li>Disputes and complaints</li>
+          <li>Hardship and restructuring requests</li>
+          <li>Field visits and recovery</li>
+          <li>Anyone who asks for a person</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="how" aria-labelledby="how-title">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 id="how-title">How a pilot runs</h2>
+      <p class="lede">A spreadsheet in and a spreadsheet out. No system integration.</p>
+    </div>
+    <ol class="steps">
+      <li><div class="step-n">1 <span>Week 0</span></div><h3>Agree the call</h3><p>You approve the script and language first.</p></li>
+      <li><div class="step-n">2 <span>Week 0</span></div><h3>Share a list</h3><p>Name, phone, EMI amount, due date.</p></li>
+      <li><div class="step-n">3 <span>Weeks 1–4</span></div><h3>Calls go out</h3><p>Within calling hours. Results every evening.</p></li>
+      <li><div class="step-n">4 <span>Week 4</span></div><h3>Compare</h3><p>Reached, promised and paid, against your current process.</p></li>
+    </ol>
+
+    <div class="sheet-wrap">
+      <div>
+        <h3>Your daily results sheet</h3>
+        <p>One row per borrower. Your team starts with the ones that need a person.</p>
+      </div>
+      <div class="sheet">
+        <div class="sheet-title"><strong>Results, 20 Oct</strong><span>Sample data</span></div>
+        <div class="sheet-scroll">
+          <table>
+            <thead><tr><th scope="col">Borrower</th><th scope="col">EMI</th><th scope="col">Outcome</th><th scope="col">Next step</th></tr></thead>
+            <tbody>
+              <tr><td>Ramesh Kumar</td><td class="num">₹4,850</td><td><span class="tag tag-ok">Promised 25 Oct</span></td><td>Reminder on 24 Oct</td></tr>
+              <tr><td>Sunita Devi</td><td class="num">₹3,200</td><td><span class="tag tag-paid">Already paid</span></td><td>None</td></tr>
+              <tr><td>Imran Shaikh</td><td class="num">₹6,100</td><td><span class="tag tag-retry">No answer</span></td><td>Retry at 6 pm</td></tr>
+              <tr><td>Kavita Patil</td><td class="num">₹2,750</td><td><span class="tag tag-staff">Asked for staff</span></td><td>Call back from branch</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section band-white" aria-labelledby="terms-title">
+  <div class="wrap two">
+    <div>
+      <h2 id="terms-title" style="margin-bottom:24px">Pilot terms</h2>
+      <dl class="terms">
+        <div><dt>Accounts</dt><dd>300 to 1,000 borrowers, chosen by you</dd></div>
+        <div><dt>Comparison</dt><dd>Half get the assistant's calls, half stay as today</dd></div>
+        <div><dt>Fee</dt><dd>Small and flat, agreed in writing first</dd></div>
+        <div><dt>Afterwards</dt><dd>No obligation to continue</dd></div>
+        <div><dt>In return</dt><dd>Permission to publish the results, anonymised if you prefer. You approve the write-up.</dd></div>
+      </dl>
+    </div>
+    <div>
+      <h2 style="margin-bottom:24px">Rules every call follows</h2>
+      <ul class="rules">
+        <li><strong>Calling hours only.</strong> 8 am to 7 pm.</li>
+        <li><strong>Says it is automated</strong> and names your company.</li>
+        <li><strong>Recorded,</strong> and you can listen to any call.</li>
+        <li><strong>Polite.</strong> Difficult conversations go to your staff.</li>
+        <li><strong>Minimum data.</strong> Name, phone, amount, due date.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section faq" id="faq" aria-labelledby="faq-title">
+  <div class="wrap faq-grid">
+    <div><h2 id="faq-title">Questions lenders ask first</h2></div>
+    <div>
+      <details>
+        <summary>Do we need to connect our loan system?</summary>
+        <p>No. You send an Excel file and we send results back the same way.</p>
+      </details>
+      <details>
+        <summary>Which languages does it speak?</summary>
+        <p>Hindi and English, including the mix of the two. For another language, ask us before the pilot.</p>
+      </details>
+      <details>
+        <summary>What if a borrower wants a person?</summary>
+        <p>They can ask at any point. Your team gets a call-back request the same day.</p>
+      </details>
+      <details>
+        <summary>Who decides what it says?</summary>
+        <p>You do. You approve the script, and nothing changes mid-pilot without your sign-off.</p>
+      </details>
+      <details>
+        <summary>Who is RapidFlow Designs?</summary>
+        <p>A small AI implementation studio. These pilots build our first published results, so we keep them few and run them closely.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="section closing" id="contact" aria-labelledby="contact-title">
+  <div class="wrap">
+    <div>
+      <h2 id="contact-title">Three pilot places are open.</h2>
+      <p>Prefer email? <a href="mailto:yash@rapidflowdesigns.com">yash@rapidflowdesigns.com</a></p>
+    </div>
+    <a class="btn btn-primary" href="mailto:yash@rapidflowdesigns.com?subject=Pilot%20request" data-open-pilot>Request a pilot place</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span>© 2026 RapidFlow Designs</span>
+    <a href="mailto:yash@rapidflowdesigns.com">yash@rapidflowdesigns.com</a>
+  </div>
+</footer>
+
+<dialog class="dlg" id="pilot-dialog" aria-labelledby="dlg-title">
+  <div class="dlg-inner">
+    <div class="dlg-head">
+      <div>
+        <h2 id="dlg-title">Request a pilot place</h2>
+        <p>We'll reply within two working days to set up a 30-minute call.</p>
+      </div>
+      <button class="dlg-x" type="button" data-close aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <form class="form" id="pilot-form" novalidate>
+      <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" type="text" autocomplete="name" required autofocus></div>
+      <div class="field"><label for="f-email">Work email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
+      <div class="field full"><label for="f-company">Company</label><input id="f-company" name="company" type="text" autocomplete="organization" required></div>
+      <div class="field"><label for="f-phone">Phone <span>(optional)</span></label><input id="f-phone" name="phone" type="tel" autocomplete="tel"></div>
+      <div class="field"><label for="f-lang">Borrower language <span>(optional)</span></label><input id="f-lang" name="language" type="text" placeholder="Hindi, Marathi…"></div>
+      <div class="form-foot full">
+        <button class="btn btn-primary" type="submit">Send request</button>
+        <p class="form-status" id="form-status" role="status"></p>
+      </div>
+    </form>
+  </div>
+</dialog>
+
+<script>
+(function () {
+  /* ---------- request dialog ---------- */
+  var dlg = document.getElementById('pilot-dialog');
+  var root = document.documentElement;
+  var canDialog = typeof dlg.showModal === 'function';
+  function openDlg() { if (!dlg.open) { dlg.showModal(); root.classList.add('modal-open'); } }
+  function closeDlg() { if (dlg.open) dlg.close(); }
+  if (canDialog) {
+    document.querySelectorAll('[data-open-pilot]').forEach(function (a) {
+      a.addEventListener('click', function (e) { e.preventDefault(); openDlg(); });
+    });
+    dlg.querySelector('[data-close]').addEventListener('click', closeDlg);
+    dlg.addEventListener('click', function (e) { if (e.target === dlg) closeDlg(); });
+    dlg.addEventListener('close', function () { root.classList.remove('modal-open'); });
+  }
+
+  /* ---------- sample call ---------- */
+  var card = document.getElementById('sample-call');
+  var list = document.getElementById('transcript');
+  var lines = Array.prototype.slice.call(list.querySelectorAll('.line'));
+  var btn = card.querySelector('.play');
+  var lbl = btn.querySelector('.lbl');
+  var audio = document.getElementById('call-audio');
+  var src = audio.getAttribute('data-src');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var timers = [];
+  var playing = false;
+  var pauseIcon = '<svg viewBox="0 0 10 10"><rect x="2" y="1.5" width="2" height="7" fill="#15171C"/><rect x="6" y="1.5" width="2" height="7" fill="#15171C"/></svg>';
+  var playIcon = btn.querySelector('.ic').innerHTML;
+
+  function setButton(state) {
+    btn.setAttribute('aria-pressed', state === 'playing' ? 'true' : 'false');
+    btn.querySelector('.ic').innerHTML = state === 'playing' ? pauseIcon : playIcon;
+    if (state === 'playing') lbl.textContent = 'Stop';
+    else if (state === 'done') lbl.textContent = src ? 'Play again' : 'Replay';
+    else lbl.innerHTML = src ? 'Play <span class="lbl-long">the call</span>' : 'Play';
+  }
+  function show(i) {
+    lines.forEach(function (l, j) { l.classList.toggle('shown', j <= i); l.classList.toggle('current', j === i); });
+  }
+  function reset() {
+    timers.forEach(clearTimeout); timers = [];
+    list.classList.remove('is-playing'); card.classList.remove('is-playing');
+    lines.forEach(function (l) { l.classList.remove('shown', 'current'); });
+  }
+  function finish() {
+    playing = false;
+    list.classList.remove('is-playing'); card.classList.remove('is-playing'); card.classList.add('is-done');
+    lines.forEach(function (l) { l.classList.add('shown'); l.classList.remove('current'); });
+    setButton('done');
+  }
+  function start() {
+    reset(); card.classList.remove('is-done');
+    playing = true; setButton('playing');
+    if (reduce && !src) { finish(); return; }
+    list.classList.add('is-playing'); card.classList.add('is-playing');
+    if (src) {
+      if (!audio.src) audio.src = src;
+      audio.currentTime = 0; audio.play();
+      return;
+    }
+    /* No recording yet: step through the transcript on its own. */
+    var t = 0;
+    lines.forEach(function (l, i) {
+      timers.push(setTimeout(function () { show(i); }, t));
+      t += 900 + l.querySelector('.en').textContent.length * 38;
+    });
+    timers.push(setTimeout(finish, t));
+  }
+  function stop() {
+    if (src) audio.pause();
+    reset(); playing = false; card.classList.remove('is-done'); setButton('idle');
+  }
+  if (src) {
+    audio.addEventListener('timeupdate', function () {
+      var idx = -1;
+      lines.forEach(function (l, i) { if (audio.currentTime >= parseFloat(l.getAttribute('data-t') || 0)) idx = i; });
+      if (idx >= 0) show(idx);
+    });
+    audio.addEventListener('ended', finish);
+  }
+  setButton('idle');
+  btn.addEventListener('click', function () { playing ? stop() : start(); });
+  document.querySelectorAll('[data-play-link]').forEach(function (a) {
+    a.addEventListener('click', function () { if (!playing) setTimeout(start, reduce ? 0 : 450); });
+  });
+
+  /* ---------- pilot request form (Web3Forms, same key as the previous site) ---------- */
+  var form = document.getElementById('pilot-form');
+  var status = document.getElementById('form-status');
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    var missing = ['f-name', 'f-email', 'f-company'].filter(function (id) { return !document.getElementById(id).value.trim(); });
+    var email = document.getElementById('f-email');
+    if (missing.length) { status.className = 'form-status err'; status.textContent = 'Add your name, work email and company.'; document.getElementById(missing[0]).focus(); return; }
+    if (!email.checkValidity()) { status.className = 'form-status err'; status.textContent = 'Check the email address; it looks incomplete.'; email.focus(); return; }
+    var submit = form.querySelector('button[type=submit]');
+    submit.disabled = true; status.className = 'form-status'; status.textContent = 'Sending…';
+    var data = new FormData(form);
+    data.append('access_key', 'e5803a90-ff27-4eb2-8989-cd73c292fb0b');
+    data.append('subject', 'Pilot request: ' + (data.get('company') || data.get('name')));
+    data.append('from_name', 'RapidFlow Designs website');
+    try {
+      var res = await fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { Accept: 'application/json' }, body: data });
+      var json = await res.json();
+      if (json.success) { form.reset(); status.className = 'form-status ok'; status.textContent = 'Request sent. We will reply within two working days.'; }
+      else { throw new Error(); }
+    } catch (err) {
+      status.className = 'form-status err';
+      status.textContent = 'The request didn’t send. Email yash@rapidflowdesigns.com instead.';
+    }
+    submit.disabled = false;
+  });
+})();
+</script>
+</body>
+</html>
