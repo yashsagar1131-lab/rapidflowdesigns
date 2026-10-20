@@ -120,3 +120,12 @@ public/
 - **Motion**: fade-up-on-scroll (IntersectionObserver-driven) and a subtle
   animated dashed line in the hero/process sections. `prefers-reduced-motion`
   is respected globally in `globals.css`.
+
+## Live voice demo (homepage)
+
+The hero card has a "Talk to it live" mode that calls a Bolna voice agent from the browser.
+
+- `functions/api/bolna-session.js` is a Cloudflare Pages Function that mints a short-lived Bolna web-call session. The Bolna key never reaches the browser.
+- Set `BOLNA_API_KEY` as a **secret** in Cloudflare Pages > Settings > Variables and Secrets (Production). Optionally set `BOLNA_AGENT_ID` to point at a different agent.
+- The browser SDK is vendored at `public/vendor/bolna-web-call-3.0.1.min.js` (MIT, `@bolna/web-call`) and only loads when a visitor opens the live tab.
+- Spend is capped by the prepaid Bolna balance and the agent's 3 minute call limit. Add a Cloudflare rate-limiting rule on `/api/bolna-session` for more protection.

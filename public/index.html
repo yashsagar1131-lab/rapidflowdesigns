@@ -100,6 +100,37 @@ p{margin:0}
 .play{flex:none;display:inline-flex;align-items:center;gap:9px;background:var(--ink);color:#fff;border:0;border-radius:999px;padding:9px 15px 9px 10px;font:600 14px/1 var(--body);cursor:pointer}
 .play .ic{width:22px;height:22px;border-radius:50%;background:var(--amber);display:grid;place-items:center}
 .play .ic svg{width:10px;height:10px}
+.modes{display:flex;gap:4px;margin:12px 18px 0;padding:4px;background:var(--bg);border-radius:999px}
+.mode{flex:1;border:0;background:transparent;color:var(--ink-2);font:600 14px/1 var(--body);padding:9px 12px;border-radius:999px;cursor:pointer}
+.mode[aria-selected=true]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(21,23,28,.14)}
+.call[data-mode=live] .play,.call[data-mode=live] .transcript,.call[data-mode=live] .sample-only{display:none}
+.call[data-mode=sample] .live{display:none}
+@media (max-height:700px) and (min-width:961px){
+  .call-top{padding:9px 18px}.modes{margin-top:8px}.mode{padding:7px 12px}
+  .transcript{padding-top:10px;gap:7px}.outcome{margin:6px 18px 14px}.live{padding-top:12px;gap:8px}
+}
+.live{padding:16px 18px 4px;display:flex;flex-direction:column;gap:12px}
+.live-status{display:flex;align-items:center;gap:10px;font-weight:600;font-size:15px}
+.live-status .pulse{width:9px;height:9px;border-radius:50%;background:var(--ink-3)}
+.live[data-state=connecting] .pulse,.live[data-state=ringing] .pulse{background:var(--amber)}
+.live[data-state=active] .pulse{background:var(--green);animation:blink 1.4s ease-in-out infinite}
+.live[data-state=error] .pulse{background:#B3261E}
+@keyframes blink{50%{opacity:.35}}
+@media (prefers-reduced-motion:reduce){.live[data-state=active] .pulse{animation:none}}
+.meter{display:flex;align-items:center;gap:4px;height:26px}
+.meter i{display:block;width:5px;height:4px;border-radius:3px;background:var(--green-tint);transition:height .1s linear,background-color .1s}
+.live[data-state=active] .meter i{background:var(--green)}
+.live-try{font-size:13.5px;color:var(--ink-2)}
+.chips{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.chips li{background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-family:var(--deva);font-size:15px;line-height:1.3;color:var(--ink)}
+.live-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.live-btn{display:inline-flex;align-items:center;gap:9px;background:var(--green);color:#fff;border:0;border-radius:999px;padding:11px 18px;font:600 15px/1 var(--body);cursor:pointer}
+.live-btn:hover{background:var(--green-deep)}
+.live-btn[disabled]{opacity:.6;cursor:default}
+.live-btn.end{background:var(--ink)}
+.live-ghost{background:transparent;border:1px solid var(--line);color:var(--ink);border-radius:999px;padding:10px 16px;font:600 14px/1 var(--body);cursor:pointer}
+.live-ghost[hidden],.live-btn[hidden]{display:none}
+.live-note{font-size:12.5px;color:var(--ink-3);line-height:1.45}
 .transcript{list-style:none;margin:0;padding:16px 18px 4px;display:flex;flex-direction:column;gap:10px}
 .line{display:grid;grid-template-columns:62px minmax(0,1fr);gap:10px;align-items:baseline;transition:opacity .35s ease}
 .line .who{font-size:12.5px;font-weight:600;color:var(--ink-3);padding-top:2px}
@@ -241,7 +272,7 @@ p{margin:0}
       RapidFlow Designs
     </a>
     <nav class="nav" aria-label="Main">
-      <a href="#sample-call">Sample call</a>
+      <a href="#sample-call">Demo</a>
       <a href="#how">How it runs</a>
       <a href="#faq">Questions</a>
     </nav>
@@ -259,7 +290,7 @@ p{margin:0}
       <p class="lede">An AI calling assistant that makes the routine reminder calls and sends your team a daily results sheet.</p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="#contact" data-open-pilot>Request a pilot place</a>
-        <a class="btn btn-quiet" href="#sample-call" data-play-link>Play the sample call</a>
+        <a class="btn btn-quiet" href="#sample-call" data-live-link>Talk to the assistant</a>
       </div>
       <dl class="pilot-strip" aria-label="The pilot">
         <div><dt>Pilot</dt><dd>4 weeks</dd></div>
@@ -270,19 +301,42 @@ p{margin:0}
       <p class="hero-note">Measured against your current process. No obligation to continue.</p>
     </div>
 
-    <figure class="call" id="sample-call" aria-labelledby="call-title">
+    <figure class="call" id="sample-call" data-mode="sample" aria-labelledby="call-title">
       <div class="call-top">
         <div class="call-who">
           <div class="avatar" aria-hidden="true">RK</div>
           <div>
             <strong id="call-title">Sample call: EMI due in 3 days</strong>
-            <span>In Hindi. Fictional borrower and lender.</span>
+            <span id="call-sub">In Hindi. Fictional borrower and lender.</span>
           </div>
         </div>
         <button class="play" type="button" aria-pressed="false" aria-controls="transcript">
           <span class="ic" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M2 1l7 4-7 4z" fill="#15171C"/></svg></span>
           <span class="lbl">Play</span>
         </button>
+      </div>
+      <div class="modes" role="tablist" aria-label="Demo mode">
+        <button class="mode" type="button" role="tab" id="tab-sample" aria-selected="true" data-mode="sample">Listen to a call</button>
+        <button class="mode" type="button" role="tab" id="tab-live" aria-selected="false" data-mode="live">Talk to it live</button>
+      </div>
+      <div class="live" id="live" data-state="idle" role="tabpanel" aria-labelledby="tab-live">
+        <div class="live-status"><span class="pulse" aria-hidden="true"></span><span id="live-msg" aria-live="polite">Ready when you are</span></div>
+        <div class="meter" id="meter" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div>
+          <p class="live-try">You play Ramesh Kumar, who has an EMI due. Try saying:</p>
+          <ul class="chips" lang="hi">
+            <li>हाँ, बोलिए</li>
+            <li>25 तारीख़ तक कर दूँगा</li>
+            <li>मैं पेमेंट कर चुका हूँ</li>
+            <li lang="en">Can I speak to a person?</li>
+          </ul>
+        </div>
+        <div class="live-actions">
+          <button class="live-btn" type="button" id="live-start">Start the call</button>
+          <button class="live-btn end" type="button" id="live-end" hidden>End call</button>
+          <button class="live-ghost" type="button" id="live-mute" hidden aria-pressed="false">Mute</button>
+        </div>
+        <p class="live-note">Uses your microphone; headphones work best. Calls are recorded and last up to 3 minutes. Please don’t share personal or financial details.</p>
       </div>
       <ol class="transcript" id="transcript" aria-live="polite">
         <li class="line ai" data-t="0">
@@ -302,7 +356,7 @@ p{margin:0}
           <div><span class="hi" lang="hi">ठीक है, 25 अक्टूबर नोट कर ली है। धन्यवाद।</span><span class="en">Noted, 25 October. Thank you.</span></div>
         </li>
       </ol>
-      <dl class="outcome" aria-label="What your team sees after the call">
+      <dl class="outcome sample-only" aria-label="What your team sees after the call">
         <div><dt>Outcome</dt><dd>Promise to pay</dd></div>
         <div><dt>Promised date</dt><dd>25 Oct</dd></div>
         <div><dt>Next step</dt><dd>Reminder 24 Oct</dd></div>
@@ -560,9 +614,112 @@ p{margin:0}
   }
   setButton('idle');
   btn.addEventListener('click', function () { playing ? stop() : start(); });
-  document.querySelectorAll('[data-play-link]').forEach(function (a) {
-    a.addEventListener('click', function () { if (!playing) setTimeout(start, reduce ? 0 : 450); });
+
+  /* ---------- live call (Bolna Web Call SDK, loaded only when needed) ---------- */
+  var SDK_URL = '/vendor/bolna-web-call-3.0.1.min.js';
+  var SESSION_URL = '/api/bolna-session';
+  var MAX_LIVE_MS = 180000;
+  var live = document.getElementById('live');
+  var liveMsg = document.getElementById('live-msg');
+  var startBtn = document.getElementById('live-start');
+  var endBtn = document.getElementById('live-end');
+  var muteBtn = document.getElementById('live-mute');
+  var bars = Array.prototype.slice.call(document.querySelectorAll('#meter i'));
+  var title = document.getElementById('call-title');
+  var sub = document.getElementById('call-sub');
+  var sampleTitle = title.textContent, sampleSub = sub.textContent;
+  var liveCall = null, liveTimer = null, sdkPromise = null;
+
+  function loadSdk() {
+    if (window.BolnaWebCall) return Promise.resolve();
+    if (!sdkPromise) {
+      sdkPromise = new Promise(function (resolve, reject) {
+        var s = document.createElement('script');
+        s.src = SDK_URL; s.onload = resolve;
+        s.onerror = function () { sdkPromise = null; reject(new Error('sdk')); };
+        document.head.appendChild(s);
+      });
+    }
+    return sdkPromise;
+  }
+  function setLive(state, message) {
+    live.setAttribute('data-state', state);
+    if (message) liveMsg.textContent = message;
+    var inCall = state === 'connecting' || state === 'ringing' || state === 'active';
+    startBtn.hidden = inCall; endBtn.hidden = !inCall; muteBtn.hidden = state !== 'active';
+    startBtn.disabled = false;
+    if (!inCall) { bars.forEach(function (b) { b.style.height = ''; }); }
+    startBtn.textContent = state === 'ended' || state === 'error' ? 'Start again' : 'Start the call';
+  }
+  function friendly(e) {
+    var code = e && e.code;
+    if (code === 'microphone_denied') return 'Microphone is blocked. Allow it in your browser’s address bar, then try again.';
+    if (code === 'at_capacity') return 'All lines are busy. Please try again in a minute.';
+    if (code === 'autoplay_blocked') return 'Your browser blocked the audio. Click Start again.';
+    return 'The live demo is not available right now. Listen to the sample call instead.';
+  }
+  function endLive(message) {
+    clearTimeout(liveTimer);
+    var c = liveCall; liveCall = null;
+    if (c) { try { c.stop(); } catch (e) {} }
+    muteBtn.setAttribute('aria-pressed', 'false'); muteBtn.textContent = 'Mute';
+    if (message !== false) setLive('ended', message || 'Call ended. Thanks for trying it.');
+  }
+  function startLive() {
+    if (liveCall) return;
+    setLive('connecting', 'Connecting…'); startBtn.hidden = true; endBtn.hidden = false;
+    loadSdk().then(function () {
+      var call = new window.BolnaWebCall({ sessionUrl: SESSION_URL });
+      liveCall = call;
+      call.on('state-change', function (s) {
+        if (call !== liveCall) return;
+        if (s === 'ringing') setLive('ringing', 'Calling…');
+        else if (s === 'active') setLive('active', 'On the call. Speak when she greets you.');
+      });
+      call.on('volume-level', function (v) {
+        var n = Math.round(Math.min(1, v * 1.6) * bars.length);
+        bars.forEach(function (b, i) { b.style.height = (i < n ? 8 + (i % 4) * 4 + 6 : 4) + 'px'; });
+      });
+      call.on('call-end', function () { if (call === liveCall) endLive(); });
+      call.on('error', function (e) { if (call === liveCall) { endLive(false); setLive('error', friendly(e)); } });
+      liveTimer = setTimeout(function () { endLive('The demo call has reached its 3 minute limit.'); }, MAX_LIVE_MS);
+      return call.start();
+    }).catch(function (e) {
+      if (!liveCall && live.getAttribute('data-state') === 'error') return;
+      endLive(false); setLive('error', friendly(e));
+    });
+  }
+  startBtn.addEventListener('click', startLive);
+  endBtn.addEventListener('click', function () { endLive(); });
+  muteBtn.addEventListener('click', function () {
+    if (!liveCall) return;
+    var m = muteBtn.getAttribute('aria-pressed') !== 'true';
+    try { liveCall.setMuted(m); } catch (e) {}
+    muteBtn.setAttribute('aria-pressed', m ? 'true' : 'false'); muteBtn.textContent = m ? 'Unmute' : 'Mute';
   });
+
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.mode'));
+  function setMode(mode) {
+    var h = card.getAttribute('data-mode') === 'sample' ? list.offsetHeight : 0;
+    if (mode === 'live') {
+      if (playing) stop();
+      if (h) live.style.minHeight = h + 'px';
+      title.textContent = 'Live demo: you play the borrower';
+      sub.textContent = 'In Hindi or English. Fictional lender.';
+      loadSdk().catch(function () {});
+    } else {
+      if (liveCall) endLive(false);
+      setLive('idle', 'Ready when you are');
+      title.textContent = sampleTitle; sub.textContent = sampleSub;
+    }
+    card.setAttribute('data-mode', mode);
+    tabs.forEach(function (t) { t.setAttribute('aria-selected', t.getAttribute('data-mode') === mode ? 'true' : 'false'); });
+  }
+  tabs.forEach(function (t) { t.addEventListener('click', function () { setMode(t.getAttribute('data-mode')); }); });
+  document.querySelectorAll('[data-live-link]').forEach(function (a) {
+    a.addEventListener('click', function () { setMode('live'); });
+  });
+  window.addEventListener('pagehide', function () { if (liveCall) endLive(false); });
 
   /* ---------- pilot request form (Web3Forms, same key as the previous site) ---------- */
   var form = document.getElementById('pilot-form');
