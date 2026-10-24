@@ -27,7 +27,16 @@ function doPost(e) {
     lock.waitLock(10000);
     const ss = SpreadsheetApp.getActiveSpreadsheet();
     let sh = ss.getSheetByName(SHEET_NAME);
-    if (!sh) sh = ss.insertSheet(SHEET_NAME);
+    if (!sh) {
+      // Reuse the default empty first tab of a brand-new sheet instead of leaving it blank.
+      const first = ss.getSheets()[0];
+      if (ss.getSheets().length === 1 && first.getLastRow() === 0) {
+        first.setName(SHEET_NAME);
+        sh = first;
+      } else {
+        sh = ss.insertSheet(SHEET_NAME);
+      }
+    }
     if (sh.getLastRow() === 0) {
       sh.appendRow(HEADERS);
       sh.setFrozenRows(1);
