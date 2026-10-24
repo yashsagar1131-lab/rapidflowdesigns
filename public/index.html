@@ -613,7 +613,16 @@ p{margin:0}
     try {
       var res = await fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { Accept: 'application/json' }, body: data });
       var json = await res.json();
-      if (json.success) { form.reset(); status.className = 'form-status ok'; status.textContent = 'Request sent. We will reply within two working days.'; }
+      if (json.success) {
+        /* Silent second copy to the Google Sheet; the email above is the main record, so any failure here is ignored. */
+        try {
+          fetch('/api/pilot-log', {
+            method: 'POST', keepalive: true, headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: data.get('name'), email: data.get('email'), company: data.get('company'), phone: data.get('phone'), language: data.get('language') })
+          }).catch(function () {});
+        } catch (e2) {}
+        form.reset(); status.className = 'form-status ok'; status.textContent = 'Request sent. We will reply within two working days.';
+      }
       else { throw new Error(); }
     } catch (err) {
       status.className = 'form-status err';
