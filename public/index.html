@@ -120,6 +120,12 @@ p{margin:0}
 .live-btn.end{background:var(--ink)}
 .live-ghost{background:transparent;border:1px solid var(--line);color:var(--ink);border-radius:999px;padding:10px 16px;font:600 14px/1 var(--body);cursor:pointer}
 .live-ghost[hidden],.live-btn[hidden]{display:none}
+.langs{display:flex;flex-wrap:wrap;gap:8px}
+.langs button{background:transparent;border:1px solid var(--line);color:var(--ink);border-radius:999px;padding:7px 13px;font:500 14px/1.2 var(--body),var(--deva);cursor:pointer}
+.langs button:hover{border-color:var(--green)}
+.langs button[aria-checked=true]{background:var(--green-tint);border-color:var(--green);color:var(--green-deep);font-weight:600}
+.langs.locked button{cursor:default;opacity:.55}
+.langs.locked button[aria-checked=true]{opacity:1}
 .live-note{font-size:12.5px;color:var(--ink-3);line-height:1.45}
 .transcript{list-style:none;margin:0;padding:16px 18px 4px;display:flex;flex-direction:column;gap:10px}
 .line{display:grid;grid-template-columns:62px minmax(0,1fr);gap:10px;align-items:baseline;transition:opacity .35s ease}
@@ -294,11 +300,23 @@ p{margin:0}
         <div class="call-who">
           <div>
             <strong id="call-title">Talk to the assistant</strong>
-            <span>You play the borrower. Hindi or English.</span>
+            <span>You play the borrower. Pick a language.</span>
           </div>
         </div>
       </div>
       <div class="live" id="live" data-state="idle">
+        <div class="langs" id="langs" role="radiogroup" aria-label="Language of the call">
+          <button type="button" role="radio" aria-checked="false" data-lang="en">English</button>
+          <button type="button" role="radio" aria-checked="true" data-lang="hi">हिन्दी</button>
+          <button type="button" role="radio" aria-checked="false" data-lang="pa">ਪੰਜਾਬੀ</button>
+          <button type="button" role="radio" aria-checked="false" data-lang="gu">ગુજરાતી</button>
+          <button type="button" role="radio" aria-checked="false" data-lang="mr">मराठी</button>
+          <button type="button" role="radio" aria-checked="false" data-lang="bn">বাংলা</button>
+          <button type="button" role="radio" aria-checked="false" data-lang="ta">தமிழ்</button>
+          <button type="button" role="radio" aria-checked="false" data-lang="te">తెలుగు</button>
+          <button type="button" role="radio" aria-checked="false" data-lang="kn">ಕನ್ನಡ</button>
+          <button type="button" role="radio" aria-checked="false" data-lang="ml">മലയാളം</button>
+        </div>
         <div class="live-status"><span class="pulse" aria-hidden="true"></span><span id="live-msg" aria-live="polite">Ready</span></div>
         <div class="meter" id="meter" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
         <div class="live-actions">
@@ -505,6 +523,16 @@ p{margin:0}
   var bars = Array.prototype.slice.call(document.querySelectorAll('#meter i'));
   var liveCall = null, liveTimer = null, sdkPromise = null, cdTimer = null, cdLeft = 0;
   var COOLDOWN_SECONDS = 5;
+  var langBox = document.getElementById('langs');
+  var chosenLang = 'hi';
+  langBox.addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-lang]');
+    if (!b || liveCall) return;
+    chosenLang = b.getAttribute('data-lang');
+    Array.prototype.forEach.call(langBox.querySelectorAll('button'), function (x) {
+      x.setAttribute('aria-checked', x === b ? 'true' : 'false');
+    });
+  });
 
   function loadSdk() {
     if (window.BolnaWebCall) return Promise.resolve();
@@ -524,6 +552,7 @@ p{margin:0}
     var inCall = state === 'connecting' || state === 'ringing' || state === 'active';
     startBtn.hidden = inCall; endBtn.hidden = !inCall; muteBtn.hidden = state !== 'active';
     startBtn.disabled = false;
+    langBox.classList.toggle('locked', inCall);
     if (!inCall) { bars.forEach(function (b) { b.style.height = ''; }); }
     startBtn.textContent = state === 'ended' || state === 'error' ? 'Start again' : 'Start the call';
     if (cdTimer) { startBtn.disabled = true; startBtn.textContent = 'Try again in ' + cdLeft + 's'; }
@@ -557,7 +586,7 @@ p{margin:0}
     if (liveCall) return;
     setLive('connecting', 'Connecting…'); startBtn.hidden = true; endBtn.hidden = false;
     loadSdk().then(function () {
-      var call = new window.BolnaWebCall({ sessionUrl: SESSION_URL });
+      var call = new window.BolnaWebCall({ sessionUrl: SESSION_URL, userData: { language: chosenLang } });
       liveCall = call;
       call.on('state-change', function (s) {
         if (call !== liveCall) return;
