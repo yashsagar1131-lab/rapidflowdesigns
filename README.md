@@ -129,3 +129,7 @@ The hero card has a "Talk to it live" mode that calls a Bolna voice agent from t
 - Set `BOLNA_API_KEY` as a **secret** in Cloudflare Pages > Settings > Variables and Secrets (Production). Optionally set `BOLNA_AGENT_ID` to point at a different agent.
 - The browser SDK is vendored at `public/vendor/bolna-web-call-3.0.1.min.js` (MIT, `@bolna/web-call`) and only loads when a visitor opens the live tab.
 - Spend is capped by the prepaid Bolna balance and the agent's 3 minute call limit. Add a Cloudflare rate-limiting rule on `/api/bolna-session` for more protection.
+
+## Demo languages
+
+The homepage demo lets the visitor pick the call language (English, Hindi, Punjabi, Gujarati, Marathi, Bengali, Tamil, Telugu, Kannada, Malayalam). The page sends only a language code; `functions/api/bolna-session.js` checks it against an allowlist, starts the Bolna call in that language (`agent_data.language`) and supplies the matching opening line (`user_data.greeting`). To add a language, add it to the Bolna agent's languages, to `GREETINGS` in the function, and to the chip row in `public/index.html`.
